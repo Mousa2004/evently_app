@@ -1,4 +1,4 @@
-import 'package:evently_app/home_screan.dart';
+import 'package:evently_app/auth/login_screan.dart';
 import 'package:evently_app/onboarding/onboarding_item.dart';
 import 'package:evently_app/onboarding/switch_item.dart';
 import 'package:evently_app/themeapp.dart' show Themeapp;
@@ -143,7 +143,7 @@ class _OnboardingState extends State<Onboarding> {
                       sharedPref.setBool("onboarding", true);
                       Navigator.of(
                         context,
-                      ).pushReplacementNamed(HomeScrean.routName);
+                      ).pushReplacementNamed(LoginScrean.routName);
                     },
 
                     back: OnboardingItem(
