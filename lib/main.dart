@@ -51,7 +51,7 @@ class _MyAppState extends State<MyApp> {
       routes: {
         HomeScrean.routName: (_) => HomeScrean(),
         Onboarding.routName: (_) => Onboarding(),
-        LoginScrean.routName: (_) => LogoSrean(),
+        LoginScrean.routName: (_) => LoginScrean(),
         RegisterScrean.routName: (_) => RegisterScrean(),
       },
       theme: Themeapp.themeAppLight,
