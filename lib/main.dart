@@ -1,6 +1,5 @@
 import 'package:evently_app/auth/login_screan.dart';
 import 'package:evently_app/auth/register_screan.dart';
-import 'package:evently_app/componemt/logo_srean.dart';
 import 'package:evently_app/home_screan.dart';
 import 'package:evently_app/onboarding/onboarding.dart';
 import 'package:evently_app/themeapp.dart';

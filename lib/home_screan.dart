@@ -22,6 +22,7 @@ class _HomeScreanState extends State<HomeScrean> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Themeapp.white,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
