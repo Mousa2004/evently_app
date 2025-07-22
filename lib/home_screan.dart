@@ -1,11 +1,9 @@
-import 'package:evently_app/auth/login_screan.dart';
 import 'package:evently_app/tabs/home/home_tab.dart';
 import 'package:evently_app/tabs/interaction/interaction_tab.dart';
 import 'package:evently_app/tabs/itemImage_tab.dart';
 import 'package:evently_app/tabs/map/map_tab.dart';
 import 'package:evently_app/tabs/profile/profile_tab.dart';
 import 'package:evently_app/themeapp.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class HomeScrean extends StatefulWidget {

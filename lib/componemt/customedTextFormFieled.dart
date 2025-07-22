@@ -8,6 +8,8 @@ class Customedtextformfieled extends StatelessWidget {
   final bool obscureText;
   final String? Function(String?)? validator;
   final TextEditingController? controller;
+  final Color? colorBorder;
+  final Color? colorHint;
   const Customedtextformfieled({
     super.key,
     required this.hint,
@@ -16,6 +18,8 @@ class Customedtextformfieled extends StatelessWidget {
     this.obscureText = false,
     this.controller,
     this.validator,
+    this.colorBorder,
+    this.colorHint,
   });
 
   @override
@@ -27,11 +31,11 @@ class Customedtextformfieled extends StatelessWidget {
       decoration: InputDecoration(
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
-          borderSide: BorderSide(color: Themeapp.grey),
+          borderSide: BorderSide(color: colorBorder ?? Themeapp.grey),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
-          borderSide: BorderSide(color: Themeapp.grey),
+          borderSide: BorderSide(color: colorBorder ?? Themeapp.grey),
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
@@ -44,7 +48,7 @@ class Customedtextformfieled extends StatelessWidget {
         hintText: hint,
         hintStyle: Theme.of(
           context,
-        ).textTheme.titleMedium!.copyWith(color: Themeapp.grey),
+        ).textTheme.titleMedium!.copyWith(color: colorHint ?? Themeapp.grey),
         prefixIcon: Image.asset(
           "assets/images/$imageName.png",
           height: 24,
