@@ -48,7 +48,7 @@ class _TabbarHeaderState extends State<TabbarHeader> {
                   indicatorColor: Themeapp.transparent,
                   isScrollable: true,
                   tabAlignment: TabAlignment.start,
-
+                  labelPadding: EdgeInsets.only(right: 10),
                   tabs: [
                     TabbarItem(
                       imageName: "all",

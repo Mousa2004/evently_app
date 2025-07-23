@@ -49,12 +49,14 @@ class Customedtextformfieled extends StatelessWidget {
         hintStyle: Theme.of(
           context,
         ).textTheme.titleMedium!.copyWith(color: colorHint ?? Themeapp.grey),
-        prefixIcon: Image.asset(
-          "assets/images/$imageName.png",
-          height: 24,
-          width: 24,
-          fit: BoxFit.scaleDown,
-        ),
+        prefixIcon: imageName != null && imageName.isNotEmpty
+            ? Image.asset(
+                "assets/images/$imageName.png",
+                height: 24,
+                width: 24,
+                fit: BoxFit.scaleDown,
+              )
+            : SizedBox(),
         suffixIcon: suffixIcon,
       ),
     );

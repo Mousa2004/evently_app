@@ -8,6 +8,8 @@ class TabbarItem extends StatelessWidget {
   final bool isSelect;
   final Color selectColor;
   final Color unselectColor;
+  final Color? selectBackgroundColor;
+  final Color? colorBorder;
   const TabbarItem({
     super.key,
     required this.imageName,
@@ -15,15 +17,19 @@ class TabbarItem extends StatelessWidget {
     required this.isSelect,
     required this.selectColor,
     required this.unselectColor,
+    this.colorBorder,
+    this.selectBackgroundColor,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(color: Themeapp.white),
+        border: Border.all(color: colorBorder ?? Themeapp.white),
         borderRadius: BorderRadius.circular(46),
-        color: isSelect ? Themeapp.white : Themeapp.transparent,
+        color: isSelect
+            ? (selectBackgroundColor ?? Themeapp.white)
+            : Themeapp.transparent,
       ),
       padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       margin: EdgeInsets.only(bottom: 16),

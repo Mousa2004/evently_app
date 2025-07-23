@@ -10,11 +10,12 @@ class Themeapp {
   static ThemeData themeAppLight = ThemeData(
     appBarTheme: AppBarTheme(
       titleTextStyle: TextStyle(
-        color: Color(0xFF101127),
+        color: primary,
         fontSize: 20,
         fontWeight: FontWeight.w400,
       ),
       centerTitle: true,
+      iconTheme: IconThemeData(color: primary),
     ),
     textTheme: TextTheme(
       titleLarge: TextStyle(

@@ -1,3 +1,4 @@
+import 'package:evently_app/Event/create_event.dart';
 import 'package:evently_app/tabs/home/home_tab.dart';
 import 'package:evently_app/tabs/interaction/interaction_tab.dart';
 import 'package:evently_app/tabs/itemImage_tab.dart';
@@ -23,7 +24,9 @@ class _HomeScreanState extends State<HomeScrean> {
       backgroundColor: Themeapp.white,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).pushNamed(CreateEvent.routName);
+        },
         child: Icon(Icons.add, color: Themeapp.white),
       ),
       bottomNavigationBar: BottomNavigationBar(
