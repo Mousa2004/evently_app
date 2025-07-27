@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class TabbarItem extends StatelessWidget {
-  final String imageName;
   final String text;
+  final String imageIcon;
   final bool isSelect;
   final Color selectColor;
   final Color unselectColor;
@@ -12,8 +12,9 @@ class TabbarItem extends StatelessWidget {
   final Color? colorBorder;
   const TabbarItem({
     super.key,
-    required this.imageName,
+
     required this.text,
+    required this.imageIcon,
     required this.isSelect,
     required this.selectColor,
     required this.unselectColor,
@@ -36,7 +37,7 @@ class TabbarItem extends StatelessWidget {
       child: Row(
         children: [
           SvgPicture.asset(
-            "assets/icons/$imageName.svg",
+            "assets/icons/$imageIcon.svg",
             height: 24,
             width: 24,
             fit: BoxFit.scaleDown,

@@ -1,4 +1,4 @@
-import 'package:evently_app/Event/create_event.dart';
+import 'package:evently_app/Event/create_event_model.dart';
 import 'package:evently_app/auth/login_screan.dart';
 import 'package:evently_app/auth/register_screan.dart';
 import 'package:evently_app/home_screan.dart';
@@ -53,7 +53,7 @@ class _MyAppState extends State<MyApp> {
         Onboarding.routName: (_) => Onboarding(),
         LoginScrean.routName: (_) => LoginScrean(),
         RegisterScrean.routName: (_) => RegisterScrean(),
-        CreateEvent.routName: (_) => CreateEvent(),
+        CreateEventModel.routName: (_) => CreateEventModel(),
       },
       theme: Themeapp.themeAppLight,
       darkTheme: Themeapp.themeAppDark,

@@ -56,7 +56,7 @@ class Customedtextformfieled extends StatelessWidget {
                 width: 24,
                 fit: BoxFit.scaleDown,
               )
-            : SizedBox(),
+            : SizedBox(width: 0),
         suffixIcon: suffixIcon,
       ),
     );

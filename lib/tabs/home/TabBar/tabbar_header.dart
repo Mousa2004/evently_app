@@ -51,7 +51,7 @@ class _TabbarHeaderState extends State<TabbarHeader> {
                   labelPadding: EdgeInsets.only(right: 10),
                   tabs: [
                     TabbarItem(
-                      imageName: "all",
+                      imageIcon: "all",
                       text: "All",
                       isSelect: currentIndex == 0,
 
@@ -60,7 +60,7 @@ class _TabbarHeaderState extends State<TabbarHeader> {
                     ),
                     ...CategoriesModel.categories.map(
                       (category) => TabbarItem(
-                        imageName: category.imageName,
+                        imageIcon: category.imageIcon,
                         text: category.name,
                         isSelect:
                             currentIndex ==
