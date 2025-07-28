@@ -4,7 +4,8 @@ import 'package:evently_app/themeapp.dart';
 import 'package:flutter/material.dart';
 
 class TabbarHeader extends StatefulWidget {
-  const TabbarHeader({super.key});
+  final void Function(CategoriesModel?) filterEvent;
+  const TabbarHeader({super.key, required this.filterEvent});
 
   @override
   State<TabbarHeader> createState() => _TabbarHeaderState();
@@ -43,6 +44,10 @@ class _TabbarHeaderState extends State<TabbarHeader> {
                   onTap: (index) {
                     if (currentIndex == index) return;
                     currentIndex = index;
+                    CategoriesModel? selectCategry = currentIndex == 0
+                        ? null
+                        : CategoriesModel.categories[currentIndex - 1];
+                    widget.filterEvent(selectCategry);
                     setState(() {});
                   },
                   indicatorColor: Themeapp.transparent,

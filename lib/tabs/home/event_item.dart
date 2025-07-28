@@ -1,10 +1,11 @@
+import 'package:evently_app/model/event_model.dart';
 import 'package:evently_app/themeapp.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class EventItem extends StatelessWidget {
-  final String imageName;
-  final String text;
-  const EventItem({super.key, required this.imageName, required this.text});
+  final EventModel event;
+  const EventItem({super.key, required this.event});
 
   @override
   Widget build(BuildContext context) {
@@ -15,8 +16,8 @@ class EventItem extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(16),
             child: Image.asset(
-              "assets/images/$imageName.png",
-              height: MediaQuery.sizeOf(context).height * 0.30,
+              "assets/images/${event.category.imageName}.png",
+              height: MediaQuery.sizeOf(context).height * 0.26,
               width: MediaQuery.sizeOf(context).width,
               fit: BoxFit.fill,
             ),
@@ -30,9 +31,12 @@ class EventItem extends StatelessWidget {
             ),
             child: Column(
               children: [
-                Text("21", style: Theme.of(context).textTheme.titleLarge),
                 Text(
-                  "Nov",
+                  "${event.dateTime.day}",
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                Text(
+                  DateFormat('MMM').format(event.dateTime),
                   style: Theme.of(context).textTheme.titleSmall!.copyWith(
                     color: Themeapp.primary,
                     fontWeight: FontWeight.bold,
@@ -56,7 +60,7 @@ class EventItem extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      text,
+                      event.title,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.titleSmall!.copyWith(

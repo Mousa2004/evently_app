@@ -12,9 +12,17 @@ class FirebaseServices {
           );
 
   static Future<void> createEvent(EventModel event) {
-    CollectionReference eventCollection = getEventCollection();
+    CollectionReference<EventModel> eventCollection = getEventCollection();
     DocumentReference doc = eventCollection.doc();
     event.id = doc.id;
     return doc.set(event);
+  }
+
+  static Future<List<EventModel>> getEvents() async {
+    CollectionReference<EventModel> eventCollection = getEventCollection();
+    QuerySnapshot<EventModel> querySnapshot = await eventCollection
+        .orderBy('datatime')
+        .get();
+    return querySnapshot.docs.map((query) => query.data()).toList();
   }
 }

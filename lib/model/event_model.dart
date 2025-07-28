@@ -19,7 +19,7 @@ class EventModel {
     : this(
         id: json["id"],
         category: CategoriesModel.categories.firstWhere(
-          (Category) => Category.id = json["categoryId"],
+          (Category) => Category.id == json["categoryId"],
         ),
         title: json["title"],
         description: json["description"],
