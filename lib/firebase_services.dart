@@ -31,4 +31,10 @@ class FirebaseServices {
     DocumentReference<EventModel> doc = eventCollection.doc(event.id);
     return doc.update(event.tojson());
   }
+
+  static Future<void> deleteEvent(EventModel event) {
+    CollectionReference<EventModel> eventCollection = getEventCollection();
+    DocumentReference<EventModel> doc = eventCollection.doc(event.id);
+    return doc.delete();
+  }
 }

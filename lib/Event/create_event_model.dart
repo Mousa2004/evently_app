@@ -257,8 +257,6 @@ class _CreateEventModelState extends State<CreateEventModel> {
       FirebaseServices.createEvent(event).then((_) {
         Navigator.of(context).pop();
       });
-
-      ;
     }
   }
 }

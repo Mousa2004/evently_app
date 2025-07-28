@@ -1,4 +1,7 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:evently_app/Event/edit_event_model.dart';
+import 'package:evently_app/firebase_services.dart';
+import 'package:evently_app/home_screan.dart';
 import 'package:evently_app/model/event_model.dart';
 import 'package:evently_app/themeapp.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +39,23 @@ class _EventDetailsScreanState extends State<EventDetailsScrean> {
             ),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              AwesomeDialog(
+                context: context,
+                dialogType: DialogType.warning,
+                animType: AnimType.rightSlide,
+                title: 'Are you sure want to delete?',
+                btnCancelOnPress: () {},
+                btnOkOnPress: () {
+                  FirebaseServices.deleteEvent(widget.event).then((_) {
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                      HomeScrean.routName,
+                      (route) => false,
+                    );
+                  });
+                },
+              ).show();
+            },
             icon: Icon(Icons.delete, color: Themeapp.red, size: 24),
           ),
         ],
