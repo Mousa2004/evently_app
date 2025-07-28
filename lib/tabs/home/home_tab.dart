@@ -1,3 +1,4 @@
+import 'package:evently_app/Event/event_details_screan.dart';
 import 'package:evently_app/firebase_services.dart';
 import 'package:evently_app/model/categories_model.dart';
 import 'package:evently_app/model/event_model.dart';
@@ -29,8 +30,17 @@ class _HomeTabState extends State<HomeTab> {
         Expanded(
           child: ListView.separated(
             padding: EdgeInsets.only(top: 16),
-            itemBuilder: (context, index) =>
-                EventItem(event: eventsDisplay[index]),
+            itemBuilder: (context, index) => InkWell(
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        EventDetailsScrean(event: eventsDisplay[index]),
+                  ),
+                );
+              },
+              child: EventItem(event: eventsDisplay[index]),
+            ),
             separatorBuilder: (_, _) => SizedBox(height: 16),
             itemCount: eventsDisplay.length,
           ),
