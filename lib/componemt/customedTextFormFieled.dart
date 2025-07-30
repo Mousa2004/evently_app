@@ -59,6 +59,8 @@ class Customedtextformfieled extends StatelessWidget {
             : SizedBox(width: 0),
         suffixIcon: suffixIcon,
       ),
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      onTapOutside: (_) => FocusManager.instance.primaryFocus!.unfocus(),
     );
   }
 }

@@ -43,8 +43,7 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
 
       initialRoute: widget.onboard
-          ? ((FirebaseAuth.instance.currentUser != null &&
-                    FirebaseAuth.instance.currentUser!.emailVerified)
+          ? ((FirebaseAuth.instance.currentUser != null)
                 ? HomeScrean.routName
                 : LoginScrean.routName)
           : Onboarding.routName,

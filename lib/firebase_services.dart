@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:evently_app/model/event_model.dart';
+import 'package:evently_app/model/user_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class FirebaseServices {
   static CollectionReference<EventModel> getEventCollection() =>
@@ -9,6 +11,15 @@ class FirebaseServices {
             fromFirestore: (snapshot, _) =>
                 EventModel.fromjson(snapshot.data()!),
             toFirestore: (event, _) => event.tojson(),
+          );
+
+  static CollectionReference<UserModel> getusersCollection() =>
+      FirebaseFirestore.instance
+          .collection("Users")
+          .withConverter(
+            fromFirestore: (snapshot, _) =>
+                UserModel.fromjson(snapshot.data()!),
+            toFirestore: (users, _) => users.tojson(),
           );
 
   static Future<void> createEvent(EventModel event) {
@@ -36,5 +47,39 @@ class FirebaseServices {
     CollectionReference<EventModel> eventCollection = getEventCollection();
     DocumentReference<EventModel> doc = eventCollection.doc(event.id);
     return doc.delete();
+  }
+
+  //Authentication
+
+  static Future<UserModel> register({
+    required String name,
+    required String email,
+    required String password,
+  }) async {
+    UserCredential credenttial = await FirebaseAuth.instance
+        .createUserWithEmailAndPassword(email: email, password: password);
+
+    UserModel user = UserModel(
+      id: credenttial.user!.uid,
+      name: name,
+      email: email,
+    );
+    CollectionReference<UserModel> userCollection = getusersCollection();
+    await userCollection.doc(user.id).set(user);
+    return user;
+  }
+
+  static Future<UserModel> login({
+    required String email,
+    required String password,
+  }) async {
+    UserCredential credential = await FirebaseAuth.instance
+        .signInWithEmailAndPassword(email: email, password: password);
+
+    CollectionReference<UserModel> userCollection = getusersCollection();
+    DocumentSnapshot<UserModel> docSnapshot = await userCollection
+        .doc(credential.user!.uid)
+        .get();
+    return docSnapshot.data()!;
   }
 }
