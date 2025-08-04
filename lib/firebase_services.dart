@@ -84,6 +84,10 @@ class FirebaseServices {
     return docSnapshot.data()!;
   }
 
+  static Future<void> logout() async {
+    await FirebaseAuth.instance.signOut();
+  }
+
   static Future<void> addEventToFavourites(String eventId) async {
     CollectionReference<UserModel> userCollection = getusersCollection();
     DocumentReference<UserModel> doc = userCollection.doc(
