@@ -7,6 +7,7 @@ class EventsProvider with ChangeNotifier {
   List<EventModel> eventsAll = [];
   List<EventModel> eventsDisplay = [];
   List<EventModel> favouriteEvents = [];
+  List<EventModel> allFavouriteEvents = [];
 
   Future<void> getEvents() async {
     eventsAll = await FirebaseServices.getEvents();
@@ -26,8 +27,23 @@ class EventsProvider with ChangeNotifier {
   }
 
   void filterFavouriteEvents(List<String> favouritesId) {
-    favouriteEvents = eventsAll
+    allFavouriteEvents = eventsAll
         .where((event) => favouritesId.contains(event.id))
+        .toList();
+    favouriteEvents = allFavouriteEvents;
+    notifyListeners();
+  }
+
+  void searchFavoriteEvents(String qurey) {
+    if (qurey.isEmpty) {
+      favouriteEvents = allFavouriteEvents;
+    }
+    favouriteEvents = allFavouriteEvents
+        .where(
+          (event) =>
+              event.title.toLowerCase().contains(qurey) ||
+              event.title.toUpperCase().contains(qurey),
+        )
         .toList();
     notifyListeners();
   }

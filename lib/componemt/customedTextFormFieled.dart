@@ -10,6 +10,7 @@ class Customedtextformfieled extends StatelessWidget {
   final TextEditingController? controller;
   final Color? colorBorder;
   final Color? colorHint;
+  final void Function(String)? onChanged;
   const Customedtextformfieled({
     super.key,
     required this.hint,
@@ -20,11 +21,13 @@ class Customedtextformfieled extends StatelessWidget {
     this.validator,
     this.colorBorder,
     this.colorHint,
+    this.onChanged,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onChanged: onChanged,
       validator: validator,
       obscureText: obscureText,
       controller: controller,

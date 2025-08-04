@@ -41,6 +41,7 @@ class _FavouriteTabState extends State<FavouriteTab> {
               imageName: "search",
               colorBorder: Themeapp.primary,
               colorHint: Themeapp.primary,
+              onChanged: eventsProvider.searchFavoriteEvents,
             ),
           ),
           Expanded(
