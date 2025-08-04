@@ -1,6 +1,7 @@
 import 'package:evently_app/Event/event_details_screan.dart';
 import 'package:evently_app/componemt/customedTextFormFieled.dart';
 import 'package:evently_app/provider/events_provider.dart';
+import 'package:evently_app/provider/users_provider.dart';
 import 'package:evently_app/tabs/home/event_item.dart';
 import 'package:evently_app/themeapp.dart';
 import 'package:flutter/material.dart';
@@ -18,14 +19,18 @@ class _FavouriteTabState extends State<FavouriteTab> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      eventsProvider.filterFavouriteEvents([]);
+      List<String> favouriteEventsId = Provider.of<UsersProvider>(
+        context,
+        listen: false,
+      ).currentUser!.favouritesEventsIds;
+      eventsProvider.filterFavouriteEvents(favouriteEventsId);
     });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    EventsProvider eventsProvider = Provider.of<EventsProvider>(context);
+    eventsProvider = Provider.of<EventsProvider>(context);
     return SafeArea(
       child: Column(
         children: [
@@ -46,15 +51,15 @@ class _FavouriteTabState extends State<FavouriteTab> {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) => EventDetailsScrean(
-                        event: eventsProvider.eventsDisplay[index],
+                        event: eventsProvider.favouriteEvents[index],
                       ),
                     ),
                   );
                 },
-                child: EventItem(event: eventsProvider.eventsDisplay[index]),
+                child: EventItem(event: eventsProvider.favouriteEvents[index]),
               ),
               separatorBuilder: (_, _) => SizedBox(height: 16),
-              itemCount: eventsProvider.eventsDisplay.length,
+              itemCount: eventsProvider.favouriteEvents.length,
             ),
           ),
         ],

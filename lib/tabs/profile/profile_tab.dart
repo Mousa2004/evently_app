@@ -1,6 +1,4 @@
 import 'package:evently_app/auth/login_screan.dart';
-import 'package:evently_app/firebase_services.dart';
-import 'package:evently_app/model/user_model.dart';
 import 'package:evently_app/provider/users_provider.dart';
 import 'package:evently_app/tabs/profile/profile_header.dart';
 import 'package:evently_app/themeapp.dart';
@@ -157,7 +155,10 @@ class _ProfileTabState extends State<ProfileTab> {
               GoogleSignIn googleSignIn = GoogleSignIn();
               googleSignIn.disconnect();
               await FirebaseAuth.instance.signOut();
-              Provider.of<UsersProvider>(context).updateCurrentUser(null);
+              Provider.of<UsersProvider>(
+                context,
+                listen: false,
+              ).updateCurrentUser(null);
               Navigator.of(
                 context,
               ).pushNamedAndRemoveUntil(LoginScrean.routName, (route) => false);

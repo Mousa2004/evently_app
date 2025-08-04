@@ -1,7 +1,10 @@
 import 'package:evently_app/model/event_model.dart';
+import 'package:evently_app/provider/events_provider.dart';
+import 'package:evently_app/provider/users_provider.dart';
 import 'package:evently_app/themeapp.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class EventItem extends StatelessWidget {
   final EventModel event;
@@ -9,6 +12,8 @@ class EventItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    UsersProvider usersProvider = Provider.of<UsersProvider>(context);
+    bool isFavourite = usersProvider.checkIsFavoritEvent(event.id);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Stack(
@@ -69,7 +74,27 @@ class EventItem extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Icon(Icons.favorite, color: Themeapp.primary),
+                  InkWell(
+                    onTap: () {
+                      if (isFavourite) {
+                        usersProvider.removeEventFromFavourite(event.id);
+                        Provider.of<EventsProvider>(
+                          context,
+                          listen: false,
+                        ).filterFavouriteEvents(
+                          usersProvider.currentUser!.favouritesEventsIds,
+                        );
+                      } else {
+                        usersProvider.addEventToFavourite(event.id);
+                      }
+                    },
+                    child: Icon(
+                      isFavourite
+                          ? Icons.favorite
+                          : Icons.favorite_border_outlined,
+                      color: Themeapp.primary,
+                    ),
+                  ),
                 ],
               ),
             ),
