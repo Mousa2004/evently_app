@@ -1,12 +1,31 @@
+import 'package:evently_app/Event/event_details_screan.dart';
 import 'package:evently_app/componemt/customedTextFormFieled.dart';
+import 'package:evently_app/provider/events_provider.dart';
+import 'package:evently_app/tabs/home/event_item.dart';
 import 'package:evently_app/themeapp.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class FavouriteTab extends StatelessWidget {
+class FavouriteTab extends StatefulWidget {
   const FavouriteTab({super.key});
 
   @override
+  State<FavouriteTab> createState() => _FavouriteTabState();
+}
+
+class _FavouriteTabState extends State<FavouriteTab> {
+  late EventsProvider eventsProvider;
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      eventsProvider.filterFavouriteEvents([]);
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    EventsProvider eventsProvider = Provider.of<EventsProvider>(context);
     return SafeArea(
       child: Column(
         children: [
@@ -17,6 +36,25 @@ class FavouriteTab extends StatelessWidget {
               imageName: "search",
               colorBorder: Themeapp.primary,
               colorHint: Themeapp.primary,
+            ),
+          ),
+          Expanded(
+            child: ListView.separated(
+              padding: EdgeInsets.only(top: 16),
+              itemBuilder: (context, index) => InkWell(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => EventDetailsScrean(
+                        event: eventsProvider.eventsDisplay[index],
+                      ),
+                    ),
+                  );
+                },
+                child: EventItem(event: eventsProvider.eventsDisplay[index]),
+              ),
+              separatorBuilder: (_, _) => SizedBox(height: 16),
+              itemCount: eventsProvider.eventsDisplay.length,
             ),
           ),
         ],
