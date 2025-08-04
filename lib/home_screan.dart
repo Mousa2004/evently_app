@@ -1,6 +1,6 @@
 import 'package:evently_app/Event/create_event_model.dart';
 import 'package:evently_app/tabs/home/home_tab.dart';
-import 'package:evently_app/tabs/interaction/interaction_tab.dart';
+import 'package:evently_app/tabs/Favourites/favourite_tab.dart';
 import 'package:evently_app/tabs/itemImage_tab.dart';
 import 'package:evently_app/tabs/map/map_tab.dart';
 import 'package:evently_app/tabs/profile/profile_tab.dart';
@@ -17,7 +17,7 @@ class HomeScrean extends StatefulWidget {
 
 class _HomeScreanState extends State<HomeScrean> {
   int currentIndex = 0;
-  List<Widget> tabs = [HomeTab(), MapTab(), InteractionTab(), ProfileTab()];
+  List<Widget> tabs = [HomeTab(), MapTab(), FavouriteTab(), ProfileTab()];
   @override
   Widget build(BuildContext context) {
     return Scaffold(

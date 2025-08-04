@@ -1,5 +1,6 @@
 import 'package:evently_app/componemt/customedTextFormFieled.dart';
 import 'package:evently_app/componemt/customedbutton.dart';
+import 'package:evently_app/componemt/utility.dart';
 import 'package:evently_app/firebase_services.dart';
 import 'package:evently_app/model/categories_model.dart';
 import 'package:evently_app/model/event_model.dart';
@@ -261,6 +262,7 @@ class _CreateEventModelState extends State<CreateEventModel> {
         dateTime: dateTime,
       );
       FirebaseServices.createEvent(event).then((_) {
+        Utility.showSuccessMessage("The evnt has added uccessfully.");
         Navigator.of(context).pop();
       });
     }

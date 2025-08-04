@@ -1,12 +1,12 @@
 import 'package:evently_app/model/categories_model.dart';
+import 'package:evently_app/provider/events_provider.dart';
 import 'package:evently_app/tabs/home/TabBar/tabbar_item.dart';
 import 'package:evently_app/themeapp.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class TabbarHeader extends StatefulWidget {
-  final void Function(CategoriesModel?) filterEvent;
-  const TabbarHeader({super.key, required this.filterEvent});
-
+  const TabbarHeader({super.key});
   @override
   State<TabbarHeader> createState() => _TabbarHeaderState();
 }
@@ -15,6 +15,7 @@ class _TabbarHeaderState extends State<TabbarHeader> {
   int currentIndex = 0;
   @override
   Widget build(BuildContext context) {
+    EventsProvider eventsProvider = Provider.of<EventsProvider>(context);
     return Container(
       decoration: BoxDecoration(
         color: Themeapp.primary,
@@ -47,7 +48,7 @@ class _TabbarHeaderState extends State<TabbarHeader> {
                     CategoriesModel? selectCategry = currentIndex == 0
                         ? null
                         : CategoriesModel.categories[currentIndex - 1];
-                    widget.filterEvent(selectCategry);
+                    eventsProvider.filterEvents(selectCategry);
                     setState(() {});
                   },
                   indicatorColor: Themeapp.transparent,

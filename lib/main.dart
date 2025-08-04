@@ -3,10 +3,12 @@ import 'package:evently_app/auth/login_screan.dart';
 import 'package:evently_app/auth/register_screan.dart';
 import 'package:evently_app/home_screan.dart';
 import 'package:evently_app/onboarding/onboarding.dart';
+import 'package:evently_app/provider/events_provider.dart';
 import 'package:evently_app/themeapp.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
@@ -14,7 +16,12 @@ void main() async {
   await Firebase.initializeApp();
   final sharedPref = await SharedPreferences.getInstance();
   bool onboard = sharedPref.getBool("onboarding") ?? false;
-  runApp(MyApp(onboard: onboard));
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => EventsProvider()..getEvents(),
+      child: MyApp(onboard: onboard),
+    ),
+  );
 }
 
 class MyApp extends StatefulWidget {
