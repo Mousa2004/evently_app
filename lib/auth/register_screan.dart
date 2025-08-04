@@ -5,9 +5,11 @@ import 'package:evently_app/componemt/logo_srean.dart';
 import 'package:evently_app/componemt/utility.dart';
 import 'package:evently_app/firebase_services.dart';
 import 'package:evently_app/home_screan.dart';
+import 'package:evently_app/provider/users_provider.dart';
 import 'package:evently_app/themeapp.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class RegisterScrean extends StatefulWidget {
   static const String routName = "/register";
@@ -129,6 +131,10 @@ class _RegisterScreanState extends State<RegisterScrean> {
             password: password.text,
           )
           .then((user) {
+            Provider.of<UsersProvider>(
+              context,
+              listen: false,
+            ).updateCurrentUser(user);
             Navigator.of(context).pushReplacementNamed(HomeScrean.routName);
           })
           .catchError((error) {

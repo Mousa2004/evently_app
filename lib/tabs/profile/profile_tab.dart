@@ -1,9 +1,13 @@
 import 'package:evently_app/auth/login_screan.dart';
+import 'package:evently_app/firebase_services.dart';
+import 'package:evently_app/model/user_model.dart';
+import 'package:evently_app/provider/users_provider.dart';
 import 'package:evently_app/tabs/profile/profile_header.dart';
 import 'package:evently_app/themeapp.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:provider/provider.dart';
 
 class ProfileTab extends StatefulWidget {
   const ProfileTab({super.key});
@@ -153,6 +157,7 @@ class _ProfileTabState extends State<ProfileTab> {
               GoogleSignIn googleSignIn = GoogleSignIn();
               googleSignIn.disconnect();
               await FirebaseAuth.instance.signOut();
+              Provider.of<UsersProvider>(context).updateCurrentUser(null);
               Navigator.of(
                 context,
               ).pushNamedAndRemoveUntil(LoginScrean.routName, (route) => false);
