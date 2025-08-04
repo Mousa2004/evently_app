@@ -1,5 +1,6 @@
 import 'package:evently_app/model/categories_model.dart';
 import 'package:evently_app/provider/events_provider.dart';
+import 'package:evently_app/provider/users_provider.dart';
 import 'package:evently_app/tabs/home/TabBar/tabbar_item.dart';
 import 'package:evently_app/themeapp.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +36,7 @@ class _TabbarHeaderState extends State<TabbarHeader> {
                 style: Theme.of(context).textTheme.titleSmall,
               ),
               Text(
-                "User Name",
+                Provider.of<UsersProvider>(context).currentUser!.name,
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
               SizedBox(height: MediaQuery.sizeOf(context).height * 0.02),
