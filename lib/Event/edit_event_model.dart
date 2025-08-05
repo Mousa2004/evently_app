@@ -1,14 +1,18 @@
 import 'package:evently_app/componemt/customedTextFormFieled.dart';
 import 'package:evently_app/componemt/customedbutton.dart';
 import 'package:evently_app/firebase_services.dart';
+import 'package:evently_app/home_screan.dart';
 import 'package:evently_app/model/categories_model.dart';
 import 'package:evently_app/model/event_model.dart';
+import 'package:evently_app/provider/events_provider.dart';
+import 'package:evently_app/provider/settingtheme_provider.dart';
 import 'package:evently_app/tabs/home/TabBar/tabbar_item.dart';
 import 'package:evently_app/themeapp.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class EditEventModel extends StatefulWidget {
   final EventModel event;
@@ -41,6 +45,8 @@ class _EditEventModelState extends State<EditEventModel> {
 
   @override
   Widget build(BuildContext context) {
+    SettingthemeProvider settingthemeProvider =
+        Provider.of<SettingthemeProvider>(context);
     return Scaffold(
       appBar: AppBar(title: Text("Edit Event")),
       body: SingleChildScrollView(
@@ -48,13 +54,21 @@ class _EditEventModelState extends State<EditEventModel> {
           children: [
             Padding(
               padding: const EdgeInsets.all(16),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(16),
-                child: Image.asset(
-                  "assets/images/${selectCategory.imageName}.png",
-                  height: MediaQuery.sizeOf(context).height * 0.23,
-                  width: MediaQuery.sizeOf(context).width,
-                  fit: BoxFit.fill,
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16),
+                  border: settingthemeProvider.isDark
+                      ? Border.all(color: Themeapp.primary)
+                      : null,
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child: Image.asset(
+                    "assets/images/${selectCategory.imageName}.png",
+                    height: MediaQuery.sizeOf(context).height * 0.23,
+                    width: MediaQuery.sizeOf(context).width,
+                    fit: BoxFit.fill,
+                  ),
                 ),
               ),
             ),
@@ -83,7 +97,9 @@ class _EditEventModelState extends State<EditEventModel> {
                           isSelect:
                               currentIndex ==
                               CategoriesModel.categories.indexOf(Category),
-                          selectColor: Themeapp.white,
+                          selectColor: settingthemeProvider.isDark
+                              ? Themeapp.black
+                              : Themeapp.white,
                           unselectColor: Themeapp.primary,
                           colorBorder: Themeapp.primary,
                           selectBackgroundColor: Themeapp.primary,
@@ -104,7 +120,12 @@ class _EditEventModelState extends State<EditEventModel> {
                       width: double.infinity,
                       child: Text(
                         "Title",
-                        style: Theme.of(context).textTheme.titleMedium,
+                        style: Theme.of(context).textTheme.titleMedium!
+                            .copyWith(
+                              color: settingthemeProvider.isDark
+                                  ? Themeapp.white
+                                  : null,
+                            ),
                       ),
                     ),
                     SizedBox(height: 8),
@@ -119,7 +140,12 @@ class _EditEventModelState extends State<EditEventModel> {
                       width: double.infinity,
                       child: Text(
                         "Description",
-                        style: Theme.of(context).textTheme.titleMedium,
+                        style: Theme.of(context).textTheme.titleMedium!
+                            .copyWith(
+                              color: settingthemeProvider.isDark
+                                  ? Themeapp.white
+                                  : null,
+                            ),
                       ),
                     ),
                     SizedBox(height: 8),
@@ -137,11 +163,22 @@ class _EditEventModelState extends State<EditEventModel> {
                           height: 24,
                           width: 24,
                           fit: BoxFit.scaleDown,
+                          colorFilter: settingthemeProvider.isDark
+                              ? ColorFilter.mode(
+                                  Themeapp.white,
+                                  BlendMode.srcIn,
+                                )
+                              : null,
                         ),
                         SizedBox(width: 5),
                         Text(
                           "Event Data",
-                          style: Theme.of(context).textTheme.titleMedium,
+                          style: Theme.of(context).textTheme.titleMedium!
+                              .copyWith(
+                                color: settingthemeProvider.isDark
+                                    ? Themeapp.white
+                                    : null,
+                              ),
                         ),
                         Spacer(),
                         InkWell(
@@ -174,12 +211,23 @@ class _EditEventModelState extends State<EditEventModel> {
                           height: 24,
                           width: 24,
                           fit: BoxFit.scaleDown,
+                          colorFilter: settingthemeProvider.isDark
+                              ? ColorFilter.mode(
+                                  Themeapp.white,
+                                  BlendMode.srcIn,
+                                )
+                              : null,
                         ),
                         SizedBox(width: 5),
                         Text(
                           "Event Time",
 
-                          style: Theme.of(context).textTheme.titleMedium,
+                          style: Theme.of(context).textTheme.titleMedium!
+                              .copyWith(
+                                color: settingthemeProvider.isDark
+                                    ? Themeapp.white
+                                    : null,
+                              ),
                         ),
                         Spacer(),
                         InkWell(
@@ -276,7 +324,8 @@ class _EditEventModelState extends State<EditEventModel> {
         dateTime: dateTime,
       );
       FirebaseServices.editEvent(event).then((_) {
-        Navigator.of(context).pop();
+        Provider.of<EventsProvider>(context, listen: false).getEvents();
+        Navigator.of(context).pushReplacementNamed(HomeScrean.routName);
       });
     }
   }

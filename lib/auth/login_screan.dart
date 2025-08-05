@@ -6,6 +6,7 @@ import 'package:evently_app/componemt/logo_srean.dart';
 import 'package:evently_app/componemt/utility.dart';
 import 'package:evently_app/firebase_services.dart';
 import 'package:evently_app/home_screan.dart';
+import 'package:evently_app/provider/settingtheme_provider.dart';
 import 'package:evently_app/provider/users_provider.dart';
 import 'package:evently_app/themeapp.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -49,6 +50,8 @@ class _LoginScreanState extends State<LoginScrean> {
 
   @override
   Widget build(BuildContext context) {
+    SettingthemeProvider settingthemeProvider =
+        Provider.of<SettingthemeProvider>(context);
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -92,6 +95,9 @@ class _LoginScreanState extends State<LoginScrean> {
                             _obscureText
                                 ? Icons.visibility_off
                                 : Icons.visibility,
+                            color: settingthemeProvider.isDark
+                                ? Themeapp.white
+                                : null,
                           ),
                         ),
                       ),
@@ -161,7 +167,11 @@ class _LoginScreanState extends State<LoginScrean> {
                   children: [
                     Text(
                       "Don’t Have Account ? ",
-                      style: Theme.of(context).textTheme.titleMedium,
+                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                        color: settingthemeProvider.isDark
+                            ? Themeapp.white
+                            : null,
+                      ),
                     ),
                     InkWell(
                       onTap: () {

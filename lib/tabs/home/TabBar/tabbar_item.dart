@@ -1,6 +1,8 @@
+import 'package:evently_app/provider/settingtheme_provider.dart';
 import 'package:evently_app/themeapp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class TabbarItem extends StatelessWidget {
   final String text;
@@ -24,12 +26,20 @@ class TabbarItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SettingthemeProvider settingthemeProvider =
+        Provider.of<SettingthemeProvider>(context);
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(color: colorBorder ?? Themeapp.white),
+        border: Border.all(
+          color: settingthemeProvider.isDark
+              ? Themeapp.primary
+              : colorBorder ?? Themeapp.white,
+        ),
         borderRadius: BorderRadius.circular(46),
         color: isSelect
-            ? (selectBackgroundColor ?? Themeapp.white)
+            ? (settingthemeProvider.isDark
+                  ? Themeapp.primary
+                  : selectBackgroundColor ?? Themeapp.white)
             : Themeapp.transparent,
       ),
       padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),

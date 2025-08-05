@@ -1,5 +1,6 @@
 import 'package:evently_app/model/categories_model.dart';
 import 'package:evently_app/provider/events_provider.dart';
+import 'package:evently_app/provider/settingtheme_provider.dart';
 import 'package:evently_app/provider/users_provider.dart';
 import 'package:evently_app/tabs/home/TabBar/tabbar_item.dart';
 import 'package:evently_app/themeapp.dart';
@@ -16,10 +17,14 @@ class _TabbarHeaderState extends State<TabbarHeader> {
   int currentIndex = 0;
   @override
   Widget build(BuildContext context) {
+    SettingthemeProvider settingthemeProvider =
+        Provider.of<SettingthemeProvider>(context);
     EventsProvider eventsProvider = Provider.of<EventsProvider>(context);
     return Container(
       decoration: BoxDecoration(
-        color: Themeapp.primary,
+        color: settingthemeProvider.isDark
+            ? Themeapp.backgroundDark
+            : Themeapp.primary,
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(16),
           bottomRight: Radius.circular(16),
@@ -37,6 +42,7 @@ class _TabbarHeaderState extends State<TabbarHeader> {
               ),
               Text(
                 Provider.of<UsersProvider>(context).currentUser!.name,
+
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
               SizedBox(height: MediaQuery.sizeOf(context).height * 0.02),
@@ -52,6 +58,7 @@ class _TabbarHeaderState extends State<TabbarHeader> {
                     eventsProvider.filterEvents(selectCategry);
                     setState(() {});
                   },
+                  dividerColor: Themeapp.transparent,
                   indicatorColor: Themeapp.transparent,
                   isScrollable: true,
                   tabAlignment: TabAlignment.start,
@@ -62,7 +69,9 @@ class _TabbarHeaderState extends State<TabbarHeader> {
                       text: "All",
                       isSelect: currentIndex == 0,
 
-                      selectColor: Themeapp.primary,
+                      selectColor: settingthemeProvider.isDark
+                          ? Themeapp.white
+                          : Themeapp.primary,
                       unselectColor: Themeapp.white,
                     ),
                     ...CategoriesModel.categories.map(
@@ -73,7 +82,9 @@ class _TabbarHeaderState extends State<TabbarHeader> {
                             currentIndex ==
                             CategoriesModel.categories.indexOf(category) + 1,
 
-                        selectColor: Themeapp.primary,
+                        selectColor: settingthemeProvider.isDark
+                            ? Themeapp.white
+                            : Themeapp.primary,
                         unselectColor: Themeapp.white,
                       ),
                     ),

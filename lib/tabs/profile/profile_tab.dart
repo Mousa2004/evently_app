@@ -1,5 +1,6 @@
 import 'package:evently_app/auth/login_screan.dart';
 import 'package:evently_app/firebase_services.dart';
+import 'package:evently_app/provider/settingtheme_provider.dart';
 import 'package:evently_app/provider/users_provider.dart';
 import 'package:evently_app/tabs/profile/profile_header.dart';
 import 'package:evently_app/themeapp.dart';
@@ -21,17 +22,11 @@ class _ProfileTabState extends State<ProfileTab> {
   ];
 
   List<String> theme = ["Light", "Dark"];
-  Language? selectLanguage;
-  String? selectTheme;
-  @override
-  void initState() {
-    selectLanguage = lang[0];
-    selectTheme = theme[0];
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
+    SettingthemeProvider settingthemeProvider =
+        Provider.of<SettingthemeProvider>(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -56,20 +51,19 @@ class _ProfileTabState extends State<ProfileTab> {
                   border: Border.all(color: Themeapp.primary),
                   borderRadius: BorderRadius.circular(16),
                 ),
-                child: DropdownButton<Language>(
+                child: DropdownButton(
                   padding: EdgeInsets.symmetric(horizontal: 16),
                   iconEnabledColor: Themeapp.primary,
-
                   isExpanded: true,
                   underline: SizedBox(),
-                  value: selectLanguage,
+                  value: 'en',
                   dropdownColor: Themeapp.white,
                   borderRadius: BorderRadius.circular(16),
 
                   items: lang
                       .map(
-                        (language) => DropdownMenuItem<Language>(
-                          value: language,
+                        (language) => DropdownMenuItem(
+                          value: language.code,
                           child: Text(
                             language.lang,
                             style: Theme.of(context).textTheme.titleLarge,
@@ -77,10 +71,7 @@ class _ProfileTabState extends State<ProfileTab> {
                         ),
                       )
                       .toList(),
-                  onChanged: (Language? value) {
-                    selectLanguage = value;
-                    setState(() {});
-                  },
+                  onChanged: (value) {},
                 ),
               ),
               SizedBox(height: 16),
@@ -105,7 +96,7 @@ class _ProfileTabState extends State<ProfileTab> {
 
                   isExpanded: true,
                   underline: SizedBox(),
-                  value: selectTheme,
+                  value: settingthemeProvider.isDark ? "Dark" : "Light",
                   dropdownColor: Themeapp.white,
                   borderRadius: BorderRadius.circular(16),
 
@@ -120,9 +111,12 @@ class _ProfileTabState extends State<ProfileTab> {
                         ),
                       )
                       .toList(),
-                  onChanged: (String? value) {
-                    selectTheme = value;
-                    setState(() {});
+                  onChanged: (theme) {
+                    if (theme == "Dark") {
+                      settingthemeProvider.changeTheme(ThemeMode.dark);
+                    } else {
+                      settingthemeProvider.changeTheme(ThemeMode.light);
+                    }
                   },
                 ),
               ),
@@ -155,14 +149,15 @@ class _ProfileTabState extends State<ProfileTab> {
               GoogleSignIn googleSignIn = GoogleSignIn();
               googleSignIn.disconnect();
               FirebaseServices.logout().then((_) {
-                Provider.of<UsersProvider>(
+                Navigator.of(
                   context,
-                  listen: false,
-                ).updateCurrentUser(null);
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                  LoginScrean.routName,
-                  (route) => false,
-                );
+                ).pushReplacementNamed(LoginScrean.routName).then((_) {
+                  if (!mounted) return;
+                  Provider.of<UsersProvider>(
+                    context,
+                    listen: false,
+                  ).updateCurrentUser(null);
+                });
               });
             },
           ),

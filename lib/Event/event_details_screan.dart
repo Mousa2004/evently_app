@@ -3,10 +3,13 @@ import 'package:evently_app/Event/edit_event_model.dart';
 import 'package:evently_app/firebase_services.dart';
 import 'package:evently_app/home_screan.dart';
 import 'package:evently_app/model/event_model.dart';
+import 'package:evently_app/provider/events_provider.dart';
+import 'package:evently_app/provider/settingtheme_provider.dart';
 import 'package:evently_app/themeapp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class EventDetailsScrean extends StatefulWidget {
   final EventModel event;
@@ -19,6 +22,8 @@ class EventDetailsScrean extends StatefulWidget {
 class _EventDetailsScreanState extends State<EventDetailsScrean> {
   @override
   Widget build(BuildContext context) {
+    SettingthemeProvider settingthemeProvider =
+        Provider.of<SettingthemeProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text("Event Detals"),
@@ -48,10 +53,13 @@ class _EventDetailsScreanState extends State<EventDetailsScrean> {
                 btnCancelOnPress: () {},
                 btnOkOnPress: () {
                   FirebaseServices.deleteEvent(widget.event).then((_) {
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                      HomeScrean.routName,
-                      (route) => false,
-                    );
+                    Provider.of<EventsProvider>(
+                      context,
+                      listen: false,
+                    ).getEvents();
+                    Navigator.of(
+                      context,
+                    ).pushReplacementNamed(HomeScrean.routName);
                   });
                 },
               ).show();
@@ -64,13 +72,21 @@ class _EventDetailsScreanState extends State<EventDetailsScrean> {
         padding: const EdgeInsets.all(16),
         child: ListView(
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(16),
-              child: Image.asset(
-                "assets/images/${widget.event.category.imageName}.png",
-                height: MediaQuery.sizeOf(context).height * 0.23,
-                width: MediaQuery.sizeOf(context).width,
-                fit: BoxFit.fill,
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                border: settingthemeProvider.isDark
+                    ? Border.all(color: Themeapp.primary)
+                    : null,
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(16),
+                child: Image.asset(
+                  "assets/images/${widget.event.category.imageName}.png",
+                  height: MediaQuery.sizeOf(context).height * 0.23,
+                  width: MediaQuery.sizeOf(context).width,
+                  fit: BoxFit.fill,
+                ),
               ),
             ),
             SizedBox(height: 16),
@@ -115,7 +131,12 @@ class _EventDetailsScreanState extends State<EventDetailsScrean> {
                       SizedBox(height: 4),
                       Text(
                         DateFormat('h:mm a').format(widget.event.dateTime),
-                        style: Theme.of(context).textTheme.titleMedium,
+                        style: Theme.of(context).textTheme.titleMedium!
+                            .copyWith(
+                              color: settingthemeProvider.isDark
+                                  ? Themeapp.white
+                                  : null,
+                            ),
                       ),
                     ],
                   ),
@@ -165,7 +186,12 @@ class _EventDetailsScreanState extends State<EventDetailsScrean> {
               ),
             ),
             SizedBox(height: 16),
-            Text("Description", style: Theme.of(context).textTheme.titleMedium),
+            Text(
+              "Description",
+              style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                color: settingthemeProvider.isDark ? Themeapp.white : null,
+              ),
+            ),
             SizedBox(height: 8),
             Text(
               widget.event.description,

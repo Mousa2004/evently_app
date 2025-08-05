@@ -1,5 +1,6 @@
 import 'package:evently_app/model/event_model.dart';
 import 'package:evently_app/provider/events_provider.dart';
+import 'package:evently_app/provider/settingtheme_provider.dart';
 import 'package:evently_app/provider/users_provider.dart';
 import 'package:evently_app/themeapp.dart';
 import 'package:flutter/material.dart';
@@ -12,19 +13,29 @@ class EventItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SettingthemeProvider settingthemeProvider =
+        Provider.of<SettingthemeProvider>(context);
     UsersProvider usersProvider = Provider.of<UsersProvider>(context);
     bool isFavourite = usersProvider.checkIsFavoritEvent(event.id);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Stack(
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(16),
-            child: Image.asset(
-              "assets/images/${event.category.imageName}.png",
-              height: MediaQuery.sizeOf(context).height * 0.26,
-              width: MediaQuery.sizeOf(context).width,
-              fit: BoxFit.fill,
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              border: settingthemeProvider.isDark
+                  ? Border.all(color: Themeapp.primary)
+                  : null,
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(16),
+              child: Image.asset(
+                "assets/images/${event.category.imageName}.png",
+                height: MediaQuery.sizeOf(context).height * 0.26,
+                width: MediaQuery.sizeOf(context).width,
+                fit: BoxFit.fill,
+              ),
             ),
           ),
           Container(
@@ -32,7 +43,9 @@ class EventItem extends StatelessWidget {
             margin: EdgeInsets.only(top: 8, left: 8),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
-              color: Themeapp.white,
+              color: settingthemeProvider.isDark
+                  ? Themeapp.transparent
+                  : Themeapp.white,
             ),
             child: Column(
               children: [
@@ -58,7 +71,9 @@ class EventItem extends StatelessWidget {
               padding: EdgeInsets.symmetric(vertical: 10, horizontal: 8),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
-                color: Themeapp.white,
+                color: settingthemeProvider.isDark
+                    ? Themeapp.transparent
+                    : Themeapp.white,
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -70,7 +85,9 @@ class EventItem extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.titleSmall!.copyWith(
                         fontWeight: FontWeight.bold,
-                        color: Themeapp.black,
+                        color: settingthemeProvider.isDark
+                            ? Themeapp.white
+                            : Themeapp.black,
                       ),
                     ),
                   ),

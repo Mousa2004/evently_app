@@ -4,6 +4,7 @@ import 'package:evently_app/auth/register_screan.dart';
 import 'package:evently_app/home_screan.dart';
 import 'package:evently_app/onboarding/onboarding.dart';
 import 'package:evently_app/provider/events_provider.dart';
+import 'package:evently_app/provider/settingtheme_provider.dart';
 import 'package:evently_app/provider/users_provider.dart';
 import 'package:evently_app/themeapp.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -21,6 +22,7 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => UsersProvider()),
+        ChangeNotifierProvider(create: (context) => SettingthemeProvider()),
         ChangeNotifierProvider(
           create: (context) => EventsProvider()..getEvents(),
         ),
@@ -52,6 +54,8 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    SettingthemeProvider settingthemeProvider =
+        Provider.of<SettingthemeProvider>(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
 
@@ -69,7 +73,7 @@ class _MyAppState extends State<MyApp> {
       },
       theme: Themeapp.themeAppLight,
       darkTheme: Themeapp.themeAppDark,
-      themeMode: ThemeMode.light,
+      themeMode: settingthemeProvider.themeMode,
     );
   }
 }
