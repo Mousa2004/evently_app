@@ -32,6 +32,7 @@ class FirebaseServices {
   static Future<List<EventModel>> getEvents() async {
     CollectionReference<EventModel> eventCollection = getEventCollection();
     QuerySnapshot<EventModel> querySnapshot = await eventCollection
+        .where('userId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
         .orderBy('datatime')
         .get();
     return querySnapshot.docs.map((query) => query.data()).toList();

@@ -28,9 +28,7 @@ void main() async {
         ChangeNotifierProvider(
           create: (context) => SettinglocalizaionProvider(),
         ),
-        ChangeNotifierProvider(
-          create: (context) => EventsProvider()..getEvents(),
-        ),
+        ChangeNotifierProvider(create: (context) => EventsProvider()),
       ],
       child: MyApp(onboard: onboard),
     ),
