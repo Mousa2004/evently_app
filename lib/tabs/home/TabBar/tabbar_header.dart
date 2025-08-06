@@ -1,3 +1,4 @@
+import 'package:evently_app/l10n/app_localizations.dart';
 import 'package:evently_app/model/categories_model.dart';
 import 'package:evently_app/provider/events_provider.dart';
 import 'package:evently_app/provider/settingtheme_provider.dart';
@@ -17,6 +18,7 @@ class _TabbarHeaderState extends State<TabbarHeader> {
   int currentIndex = 0;
   @override
   Widget build(BuildContext context) {
+    AppLocalizations appLocalizations = AppLocalizations.of(context)!;
     SettingthemeProvider settingthemeProvider =
         Provider.of<SettingthemeProvider>(context);
     EventsProvider eventsProvider = Provider.of<EventsProvider>(context);
@@ -37,7 +39,7 @@ class _TabbarHeaderState extends State<TabbarHeader> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Welcome Back ✨",
+                "${appLocalizations.welcomeback} ✨",
                 style: Theme.of(context).textTheme.titleSmall,
               ),
               Text(

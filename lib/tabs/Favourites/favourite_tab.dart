@@ -1,5 +1,6 @@
 import 'package:evently_app/Event/event_details_screan.dart';
 import 'package:evently_app/componemt/customedTextFormFieled.dart';
+import 'package:evently_app/l10n/app_localizations.dart';
 import 'package:evently_app/provider/events_provider.dart';
 import 'package:evently_app/provider/users_provider.dart';
 import 'package:evently_app/tabs/home/event_item.dart';
@@ -30,6 +31,7 @@ class _FavouriteTabState extends State<FavouriteTab> {
 
   @override
   Widget build(BuildContext context) {
+    AppLocalizations appLocalizations = AppLocalizations.of(context)!;
     eventsProvider = Provider.of<EventsProvider>(context);
     return SafeArea(
       child: Column(
@@ -37,7 +39,7 @@ class _FavouriteTabState extends State<FavouriteTab> {
           Padding(
             padding: const EdgeInsets.all(16),
             child: Customedtextformfieled(
-              hint: "Search for Event",
+              hint: appLocalizations.searchforEvent,
               imageName: "search",
               colorBorder: Themeapp.primary,
               colorHint: Themeapp.primary,

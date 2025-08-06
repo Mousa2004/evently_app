@@ -2,6 +2,7 @@ import 'package:evently_app/componemt/customedTextFormFieled.dart';
 import 'package:evently_app/componemt/customedbutton.dart';
 import 'package:evently_app/firebase_services.dart';
 import 'package:evently_app/home_screan.dart';
+import 'package:evently_app/l10n/app_localizations.dart';
 import 'package:evently_app/model/categories_model.dart';
 import 'package:evently_app/model/event_model.dart';
 import 'package:evently_app/provider/events_provider.dart';
@@ -45,10 +46,11 @@ class _EditEventModelState extends State<EditEventModel> {
 
   @override
   Widget build(BuildContext context) {
+    AppLocalizations appLocalizations = AppLocalizations.of(context)!;
     SettingthemeProvider settingthemeProvider =
         Provider.of<SettingthemeProvider>(context);
     return Scaffold(
-      appBar: AppBar(title: Text("Edit Event")),
+      appBar: AppBar(title: Text(appLocalizations.editEvent)),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -119,7 +121,7 @@ class _EditEventModelState extends State<EditEventModel> {
                     SizedBox(
                       width: double.infinity,
                       child: Text(
-                        "Title",
+                        appLocalizations.title,
                         style: Theme.of(context).textTheme.titleMedium!
                             .copyWith(
                               color: settingthemeProvider.isDark
@@ -130,7 +132,7 @@ class _EditEventModelState extends State<EditEventModel> {
                     ),
                     SizedBox(height: 8),
                     Customedtextformfieled(
-                      hint: "Event Title",
+                      hint: appLocalizations.eventTitle,
                       colorHint: Themeapp.grey,
                       imageName: "title_edit",
                       controller: titleController,
@@ -139,7 +141,7 @@ class _EditEventModelState extends State<EditEventModel> {
                     SizedBox(
                       width: double.infinity,
                       child: Text(
-                        "Description",
+                        appLocalizations.description,
                         style: Theme.of(context).textTheme.titleMedium!
                             .copyWith(
                               color: settingthemeProvider.isDark
@@ -150,7 +152,7 @@ class _EditEventModelState extends State<EditEventModel> {
                     ),
                     SizedBox(height: 8),
                     Customedtextformfieled(
-                      hint: "Event Description",
+                      hint: appLocalizations.eventDescription,
                       colorHint: Themeapp.grey,
                       imageName: "title_edit",
                       controller: descriptionController,
@@ -172,7 +174,7 @@ class _EditEventModelState extends State<EditEventModel> {
                         ),
                         SizedBox(width: 5),
                         Text(
-                          "Event Data",
+                          appLocalizations.eventData,
                           style: Theme.of(context).textTheme.titleMedium!
                               .copyWith(
                                 color: settingthemeProvider.isDark
@@ -195,7 +197,7 @@ class _EditEventModelState extends State<EditEventModel> {
                           },
                           child: Text(
                             selectData == null
-                                ? "Choose Data"
+                                ? appLocalizations.chooseData
                                 : dateFormat.format(selectData!),
                             style: Theme.of(context).textTheme.titleMedium!
                                 .copyWith(color: Themeapp.primary),
@@ -220,7 +222,7 @@ class _EditEventModelState extends State<EditEventModel> {
                         ),
                         SizedBox(width: 5),
                         Text(
-                          "Event Time",
+                          appLocalizations.eventTime,
 
                           style: Theme.of(context).textTheme.titleMedium!
                               .copyWith(
@@ -243,7 +245,7 @@ class _EditEventModelState extends State<EditEventModel> {
                           },
                           child: Text(
                             selectTime == null
-                                ? "Choose Time"
+                                ? appLocalizations.chooseTime
                                 : selectTime!.format(context),
                             style: Theme.of(context).textTheme.titleMedium!
                                 .copyWith(color: Themeapp.primary),
@@ -255,7 +257,7 @@ class _EditEventModelState extends State<EditEventModel> {
                     SizedBox(
                       width: double.infinity,
                       child: Text(
-                        "Location",
+                        appLocalizations.location,
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
                     ),
@@ -280,16 +282,16 @@ class _EditEventModelState extends State<EditEventModel> {
                           ),
                           SizedBox(width: 8),
                           Text(
-                            "Choose Event Location",
+                            appLocalizations.chooseEventLocation,
                             style: Theme.of(context).textTheme.titleMedium!
                                 .copyWith(color: Themeapp.primary),
                           ),
                         ],
                       ),
                     ),
-                    SizedBox(height: 16),
+                    SizedBox(height: 12),
                     Customedbutton(
-                      name: "Edit Event",
+                      name: appLocalizations.editEvent,
                       onPressed: () {
                         editEvent();
                       },

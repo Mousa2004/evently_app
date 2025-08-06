@@ -2,6 +2,7 @@ import 'package:evently_app/componemt/customedTextFormFieled.dart';
 import 'package:evently_app/componemt/customedbutton.dart';
 import 'package:evently_app/componemt/utility.dart';
 import 'package:evently_app/firebase_services.dart';
+import 'package:evently_app/l10n/app_localizations.dart';
 import 'package:evently_app/model/categories_model.dart';
 import 'package:evently_app/model/event_model.dart';
 import 'package:evently_app/provider/events_provider.dart';
@@ -33,10 +34,11 @@ class _CreateEventModelState extends State<CreateEventModel> {
   DateFormat dateFormat = DateFormat('d/M/yyyy');
   @override
   Widget build(BuildContext context) {
+    AppLocalizations appLocalizations = AppLocalizations.of(context)!;
     SettingthemeProvider settingthemeProvider =
         Provider.of<SettingthemeProvider>(context);
     return Scaffold(
-      appBar: AppBar(title: Text("Create Event")),
+      appBar: AppBar(title: Text(appLocalizations.createEvent)),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -107,7 +109,7 @@ class _CreateEventModelState extends State<CreateEventModel> {
                     SizedBox(
                       width: double.infinity,
                       child: Text(
-                        "Title",
+                        appLocalizations.title,
                         style: Theme.of(context).textTheme.titleMedium!
                             .copyWith(
                               color: settingthemeProvider.isDark
@@ -118,7 +120,7 @@ class _CreateEventModelState extends State<CreateEventModel> {
                     ),
                     SizedBox(height: 8),
                     Customedtextformfieled(
-                      hint: "Event Title",
+                      hint: appLocalizations.eventTitle,
                       imageName: "title_edit",
                       controller: title,
                     ),
@@ -126,7 +128,7 @@ class _CreateEventModelState extends State<CreateEventModel> {
                     SizedBox(
                       width: double.infinity,
                       child: Text(
-                        "Description",
+                        appLocalizations.description,
                         style: Theme.of(context).textTheme.titleMedium!
                             .copyWith(
                               color: settingthemeProvider.isDark
@@ -137,7 +139,7 @@ class _CreateEventModelState extends State<CreateEventModel> {
                     ),
                     SizedBox(height: 8),
                     Customedtextformfieled(
-                      hint: "Event Description",
+                      hint: appLocalizations.eventDescription,
                       imageName: "title_edit",
                       controller: description,
                     ),
@@ -158,7 +160,7 @@ class _CreateEventModelState extends State<CreateEventModel> {
                         ),
                         SizedBox(width: 5),
                         Text(
-                          "Event Data",
+                          appLocalizations.eventData,
                           style: Theme.of(context).textTheme.titleMedium!
                               .copyWith(
                                 color: settingthemeProvider.isDark
@@ -181,7 +183,7 @@ class _CreateEventModelState extends State<CreateEventModel> {
                           },
                           child: Text(
                             selectData == null
-                                ? "Choose Data"
+                                ? appLocalizations.chooseData
                                 : dateFormat.format(selectData!),
                             style: Theme.of(context).textTheme.titleMedium!
                                 .copyWith(color: Themeapp.primary),
@@ -206,7 +208,7 @@ class _CreateEventModelState extends State<CreateEventModel> {
                         ),
                         SizedBox(width: 5),
                         Text(
-                          "Event Time",
+                          appLocalizations.eventTime,
 
                           style: Theme.of(context).textTheme.titleMedium!
                               .copyWith(
@@ -229,7 +231,7 @@ class _CreateEventModelState extends State<CreateEventModel> {
                           },
                           child: Text(
                             selectTime == null
-                                ? "Choose Time"
+                                ? appLocalizations.chooseTime
                                 : selectTime!.format(context),
                             style: Theme.of(context).textTheme.titleMedium!
                                 .copyWith(color: Themeapp.primary),
@@ -241,7 +243,7 @@ class _CreateEventModelState extends State<CreateEventModel> {
                     SizedBox(
                       width: double.infinity,
                       child: Text(
-                        "Location",
+                        appLocalizations.location,
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
                     ),
@@ -266,16 +268,16 @@ class _CreateEventModelState extends State<CreateEventModel> {
                           ),
                           SizedBox(width: 8),
                           Text(
-                            "Choose Event Location",
+                            appLocalizations.chooseEventLocation,
                             style: Theme.of(context).textTheme.titleMedium!
                                 .copyWith(color: Themeapp.primary),
                           ),
                         ],
                       ),
                     ),
-                    SizedBox(height: 16),
+                    SizedBox(height: 12),
                     Customedbutton(
-                      name: "Add Event",
+                      name: appLocalizations.addEvent,
                       onPressed: () {
                         createEvent();
                       },

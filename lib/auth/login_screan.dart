@@ -6,6 +6,7 @@ import 'package:evently_app/componemt/logo_srean.dart';
 import 'package:evently_app/componemt/utility.dart';
 import 'package:evently_app/firebase_services.dart';
 import 'package:evently_app/home_screan.dart';
+import 'package:evently_app/l10n/app_localizations.dart';
 import 'package:evently_app/provider/settingtheme_provider.dart';
 import 'package:evently_app/provider/users_provider.dart';
 import 'package:evently_app/themeapp.dart';
@@ -50,6 +51,7 @@ class _LoginScreanState extends State<LoginScrean> {
 
   @override
   Widget build(BuildContext context) {
+    AppLocalizations appLocalizations = AppLocalizations.of(context)!;
     SettingthemeProvider settingthemeProvider =
         Provider.of<SettingthemeProvider>(context);
     return Scaffold(
@@ -66,11 +68,11 @@ class _LoginScreanState extends State<LoginScrean> {
                   child: Column(
                     children: [
                       Customedtextformfieled(
-                        hint: "Email",
+                        hint: appLocalizations.email,
                         imageName: "email",
                         controller: email,
                         validator: (p0) {
-                          if (p0 == '') return "Enter your email";
+                          if (p0 == '') return appLocalizations.enteryouremail;
                         },
                       ),
                       SizedBox(
@@ -78,11 +80,11 @@ class _LoginScreanState extends State<LoginScrean> {
                       ),
                       Customedtextformfieled(
                         controller: password,
-                        hint: "Password",
+                        hint: appLocalizations.password,
                         imageName: "password",
                         validator: (p0) {
                           if (p0 == '' || p0!.length < 6) {
-                            return "Password must at lest 6 number";
+                            return appLocalizations.passwordmustatlest6number;
                           }
                         },
                         obscureText: _obscureText,
@@ -114,7 +116,7 @@ class _LoginScreanState extends State<LoginScrean> {
                           context: context,
                           dialogType: DialogType.info,
                           animType: AnimType.rightSlide,
-                          title: 'Enter your email',
+                          title: appLocalizations.enteryouremail,
                           btnCancelOnPress: () {},
                           btnOkOnPress: () {},
                         ).show();
@@ -128,8 +130,8 @@ class _LoginScreanState extends State<LoginScrean> {
                           context: context,
                           dialogType: DialogType.success,
                           animType: AnimType.rightSlide,
-                          title:
-                              'Please check your email to reset your password',
+                          title: appLocalizations
+                              .pleasecheckyouremailtoresetyourpassword,
                           btnCancelOnPress: () {},
                           btnOkOnPress: () {},
                         ).show();
@@ -139,7 +141,7 @@ class _LoginScreanState extends State<LoginScrean> {
                           context: context,
                           dialogType: DialogType.error,
                           animType: AnimType.rightSlide,
-                          title: 'Re-enter your email address',
+                          title: appLocalizations.reEnteryouremailaddress,
                           btnCancelOnPress: () {},
                           btnOkOnPress: () {},
                         ).show();
@@ -147,7 +149,7 @@ class _LoginScreanState extends State<LoginScrean> {
                     },
                     child: Text(
                       textAlign: TextAlign.end,
-                      "Forget Password?",
+                      appLocalizations.forgetPassword,
                       style: Theme.of(context).textTheme.titleMedium!.copyWith(
                         color: Themeapp.primary,
                         decoration: TextDecoration.underline,
@@ -160,13 +162,18 @@ class _LoginScreanState extends State<LoginScrean> {
                   ),
                 ),
                 SizedBox(height: MediaQuery.sizeOf(context).height * 0.02),
-                Customedbutton(name: "Login", onPressed: login),
+                Customedbutton(
+                  name: appLocalizations.login,
+                  onPressed: () {
+                    login(appLocalizations);
+                  },
+                ),
                 SizedBox(height: MediaQuery.sizeOf(context).height * 0.02),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Don’t Have Account ? ",
+                      appLocalizations.dontHaveAccount,
                       style: Theme.of(context).textTheme.titleMedium!.copyWith(
                         color: settingthemeProvider.isDark
                             ? Themeapp.white
@@ -180,7 +187,7 @@ class _LoginScreanState extends State<LoginScrean> {
                         ).pushReplacementNamed(RegisterScrean.routName);
                       },
                       child: Text(
-                        "Create Account",
+                        appLocalizations.createAccount,
                         style: Theme.of(context).textTheme.titleMedium!
                             .copyWith(
                               color: Themeapp.primary,
@@ -200,7 +207,7 @@ class _LoginScreanState extends State<LoginScrean> {
                     children: [
                       Expanded(child: Divider(color: Themeapp.primary)),
                       Text(
-                        "   Or  ",
+                        appLocalizations.or,
                         style: Theme.of(context).textTheme.titleMedium!
                             .copyWith(color: Themeapp.primary),
                       ),
@@ -229,7 +236,7 @@ class _LoginScreanState extends State<LoginScrean> {
                           fit: BoxFit.scaleDown,
                         ),
                         Text(
-                          "  Login With Google",
+                          appLocalizations.loginWithGoogle,
                           style: Theme.of(context).textTheme.titleLarge!
                               .copyWith(fontWeight: FontWeight.w500),
                         ),
@@ -245,7 +252,7 @@ class _LoginScreanState extends State<LoginScrean> {
     );
   }
 
-  void login() {
+  void login(AppLocalizations appLocalizations) {
     if (formState.currentState!.validate()) {
       FirebaseServices.login(email: email.text, password: password.text)
           .then((user) {
@@ -253,7 +260,9 @@ class _LoginScreanState extends State<LoginScrean> {
               context,
               listen: false,
             ).updateCurrentUser(user);
-            Utility.showSuccessMessage("You have successfully logged in.");
+            Utility.showSuccessMessage(
+              appLocalizations.youhavesuccessfullyloggedin,
+            );
             Navigator.of(context).pushReplacementNamed(HomeScrean.routName);
           })
           .catchError((error) {

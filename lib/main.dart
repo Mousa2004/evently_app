@@ -4,6 +4,7 @@ import 'package:evently_app/auth/register_screan.dart';
 import 'package:evently_app/home_screan.dart';
 import 'package:evently_app/onboarding/onboarding.dart';
 import 'package:evently_app/provider/events_provider.dart';
+import 'package:evently_app/provider/settingLocalizaion_provider.dart';
 import 'package:evently_app/provider/settingtheme_provider.dart';
 import 'package:evently_app/provider/users_provider.dart';
 import 'package:evently_app/themeapp.dart';
@@ -12,6 +13,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'l10n/app_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,6 +25,9 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (context) => UsersProvider()),
         ChangeNotifierProvider(create: (context) => SettingthemeProvider()),
+        ChangeNotifierProvider(
+          create: (context) => SettinglocalizaionProvider(),
+        ),
         ChangeNotifierProvider(
           create: (context) => EventsProvider()..getEvents(),
         ),
@@ -54,6 +59,8 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    SettinglocalizaionProvider settinglocalizaionProvider =
+        Provider.of<SettinglocalizaionProvider>(context);
     SettingthemeProvider settingthemeProvider =
         Provider.of<SettingthemeProvider>(context);
     return MaterialApp(
@@ -74,6 +81,10 @@ class _MyAppState extends State<MyApp> {
       theme: Themeapp.themeAppLight,
       darkTheme: Themeapp.themeAppDark,
       themeMode: settingthemeProvider.themeMode,
+
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      locale: Locale(settinglocalizaionProvider.language),
     );
   }
 }

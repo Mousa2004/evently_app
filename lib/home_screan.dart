@@ -1,4 +1,5 @@
 import 'package:evently_app/Event/create_event_model.dart';
+import 'package:evently_app/l10n/app_localizations.dart';
 import 'package:evently_app/tabs/home/home_tab.dart';
 import 'package:evently_app/tabs/Favourites/favourite_tab.dart';
 import 'package:evently_app/tabs/itemImage_tab.dart';
@@ -20,6 +21,7 @@ class _HomeScreanState extends State<HomeScrean> {
   List<Widget> tabs = [HomeTab(), MapTab(), FavouriteTab(), ProfileTab()];
   @override
   Widget build(BuildContext context) {
+    AppLocalizations appLocalizations = AppLocalizations.of(context)!;
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
@@ -48,23 +50,23 @@ class _HomeScreanState extends State<HomeScrean> {
           BottomNavigationBarItem(
             icon: ItemimageTab(imageName: "home"),
             activeIcon: ItemimageTab(imageName: "home_active"),
-            label: "Home",
+            label: appLocalizations.home,
           ),
           BottomNavigationBarItem(
             icon: ItemimageTab(imageName: "map"),
             activeIcon: ItemimageTab(imageName: "map_active"),
-            label: "Map",
+            label: appLocalizations.map,
           ),
           BottomNavigationBarItem(
             icon: ItemimageTab(imageName: "heart"),
             activeIcon: ItemimageTab(imageName: "heart_active"),
-            label: "Love",
+            label: appLocalizations.love,
           ),
 
           BottomNavigationBarItem(
             icon: ItemimageTab(imageName: "profile"),
             activeIcon: ItemimageTab(imageName: "profile_active"),
-            label: "Profile",
+            label: appLocalizations.profile,
           ),
         ],
       ),

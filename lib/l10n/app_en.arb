@@ -1,0 +1,54 @@
+{
+    "welcomeback":"Welcome Back",
+    "home":"Home",
+    "map":"Map",
+    "love":"Love",
+    "profile":"Profile",
+    "createEvent":"Create Event",
+    "title":"Title",
+    "eventTitle":"Event Title",
+    "eventDescription":"Event Description",
+    "description":"Description",
+    "eventData":"Event Data",
+    "eventTime":"Event Time",
+    "chooseData":"Choose Data",
+    "chooseTime":"Choose Time",
+    "location":"Location",
+    "chooseEventLocation":"Choose Event Location",
+    "addEvent":"Add Event",
+    "eventDetals":"Event Detals",
+    "deleteMessage":"Are you sure want to delete?",
+    "editEvent":"Edit Event",
+    "searchforEvent":"Search for Event",
+    "language":"Language",
+    "english":"English",
+    "arabic":"Arabic",
+    "theme":"Theme",
+    "light":"Light",
+    "dark":"Dark",
+    "login":"Login",
+    "email":"Email",
+    "password":"Password",
+    "forgetPassword":"Forget Password ?",
+    "dontHaveAccount":"Don’t Have Account ? ",
+    "createAccount":"Create Account",
+    "or":"   Or   ",
+    "loginWithGoogle":"  Login With Google",
+    "name":"Name",
+    "alreadyHaveAccount":"Already Have Account ?",
+    "enteryourname":"Enter your name",
+    "enteryouremail":"Enter your email",
+    "enteryourpassword":"Enter your password",
+    "passwordmustatlest6number":"Password must at lest 6 number",
+    "pleasecheckyouremailtoresetyourpassword":"Please check your email to reset your password",
+    "reEnteryouremailaddress":"Re-enter your email address",
+    "youhavesuccessfullyloggedin":"You have successfully logged in.",
+    "theaccounthasbeencreatedsuccessfully":"The account has been created successfully."
+
+
+
+
+
+
+
+}

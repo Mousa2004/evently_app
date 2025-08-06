@@ -1,5 +1,7 @@
 import 'package:evently_app/auth/login_screan.dart';
 import 'package:evently_app/firebase_services.dart';
+import 'package:evently_app/l10n/app_localizations.dart';
+import 'package:evently_app/provider/settingLocalizaion_provider.dart';
 import 'package:evently_app/provider/settingtheme_provider.dart';
 import 'package:evently_app/provider/users_provider.dart';
 import 'package:evently_app/tabs/profile/profile_header.dart';
@@ -16,15 +18,22 @@ class ProfileTab extends StatefulWidget {
 }
 
 class _ProfileTabState extends State<ProfileTab> {
-  List<Language> lang = [
-    Language(code: "en", lang: "English"),
-    Language(code: "ar", lang: "Arabic"),
-  ];
+  List<Language> getLanguages(AppLocalizations appLocalizations) {
+    return [
+      Language(code: "en", lang: appLocalizations.english),
+      Language(code: "ar", lang: appLocalizations.arabic),
+    ];
+  }
 
-  List<String> theme = ["Light", "Dark"];
+  List<String> getTheme(AppLocalizations appLocalizations) {
+    return [appLocalizations.light, appLocalizations.dark];
+  }
 
   @override
   Widget build(BuildContext context) {
+    AppLocalizations appLocalizations = AppLocalizations.of(context)!;
+    SettinglocalizaionProvider settinglocalizaionProvider =
+        Provider.of<SettinglocalizaionProvider>(context);
     SettingthemeProvider settingthemeProvider =
         Provider.of<SettingthemeProvider>(context);
     return Column(
@@ -38,7 +47,7 @@ class _ProfileTabState extends State<ProfileTab> {
               SizedBox(
                 width: double.infinity,
                 child: Text(
-                  "Language",
+                  appLocalizations.language,
                   style: Theme.of(
                     context,
                   ).textTheme.titleLarge!.copyWith(color: Themeapp.black),
@@ -56,11 +65,11 @@ class _ProfileTabState extends State<ProfileTab> {
                   iconEnabledColor: Themeapp.primary,
                   isExpanded: true,
                   underline: SizedBox(),
-                  value: 'en',
+                  value: settinglocalizaionProvider.language,
                   dropdownColor: Themeapp.white,
                   borderRadius: BorderRadius.circular(16),
 
-                  items: lang
+                  items: getLanguages(appLocalizations)
                       .map(
                         (language) => DropdownMenuItem(
                           value: language.code,
@@ -71,14 +80,17 @@ class _ProfileTabState extends State<ProfileTab> {
                         ),
                       )
                       .toList(),
-                  onChanged: (value) {},
+                  onChanged: (langCode) {
+                    if (langCode == null) return;
+                    settinglocalizaionProvider.changeLanguage(langCode);
+                  },
                 ),
               ),
               SizedBox(height: 16),
               SizedBox(
                 width: double.infinity,
                 child: Text(
-                  "Theme",
+                  appLocalizations.theme,
                   style: Theme.of(
                     context,
                   ).textTheme.titleLarge!.copyWith(color: Themeapp.black),
@@ -96,11 +108,13 @@ class _ProfileTabState extends State<ProfileTab> {
 
                   isExpanded: true,
                   underline: SizedBox(),
-                  value: settingthemeProvider.isDark ? "Dark" : "Light",
+                  value: settingthemeProvider.isDark
+                      ? appLocalizations.dark
+                      : appLocalizations.light,
                   dropdownColor: Themeapp.white,
                   borderRadius: BorderRadius.circular(16),
 
-                  items: theme
+                  items: getTheme(appLocalizations)
                       .map(
                         (theme) => DropdownMenuItem<String>(
                           value: theme,
@@ -112,7 +126,7 @@ class _ProfileTabState extends State<ProfileTab> {
                       )
                       .toList(),
                   onChanged: (theme) {
-                    if (theme == "Dark") {
+                    if (theme == appLocalizations.dark) {
                       settingthemeProvider.changeTheme(ThemeMode.dark);
                     } else {
                       settingthemeProvider.changeTheme(ThemeMode.light);

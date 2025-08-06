@@ -4,7 +4,7 @@ import 'package:evently_app/componemt/customedbutton.dart';
 import 'package:evently_app/componemt/logo_srean.dart';
 import 'package:evently_app/componemt/utility.dart';
 import 'package:evently_app/firebase_services.dart';
-import 'package:evently_app/home_screan.dart';
+import 'package:evently_app/l10n/app_localizations.dart';
 import 'package:evently_app/provider/settingtheme_provider.dart';
 import 'package:evently_app/provider/users_provider.dart';
 import 'package:evently_app/themeapp.dart';
@@ -28,6 +28,7 @@ class _RegisterScreanState extends State<RegisterScrean> {
   bool _obscureText = true;
   @override
   Widget build(BuildContext context) {
+    AppLocalizations appLocalizations = AppLocalizations.of(context)!;
     SettingthemeProvider settingthemeProvider =
         Provider.of<SettingthemeProvider>(context);
     return Scaffold(
@@ -44,22 +45,22 @@ class _RegisterScreanState extends State<RegisterScrean> {
                   child: Column(
                     children: [
                       Customedtextformfieled(
-                        hint: "Name",
+                        hint: appLocalizations.name,
                         imageName: "person",
                         controller: username,
                         validator: (val) {
-                          if (val == "") return "Enter your name";
+                          if (val == "") return appLocalizations.enteryourname;
                         },
                       ),
                       SizedBox(
                         height: MediaQuery.sizeOf(context).height * 0.02,
                       ),
                       Customedtextformfieled(
-                        hint: "Email",
+                        hint: appLocalizations.email,
                         imageName: "email",
                         controller: email,
                         validator: (val) {
-                          if (val == "") return "Enter your email";
+                          if (val == "") return appLocalizations.enteryouremail;
                         },
                       ),
                       SizedBox(
@@ -67,10 +68,11 @@ class _RegisterScreanState extends State<RegisterScrean> {
                       ),
                       Customedtextformfieled(
                         controller: password,
-                        hint: "Password",
+                        hint: appLocalizations.password,
                         imageName: "password",
                         validator: (val) {
-                          if (val == "") return "Enter your password";
+                          if (val == "")
+                            return appLocalizations.enteryourpassword;
                         },
                         obscureText: _obscureText,
                         suffixIcon: IconButton(
@@ -92,13 +94,18 @@ class _RegisterScreanState extends State<RegisterScrean> {
                   ),
                 ),
                 SizedBox(height: MediaQuery.sizeOf(context).height * 0.02),
-                Customedbutton(name: "Create Account", onPressed: register),
+                Customedbutton(
+                  name: appLocalizations.createAccount,
+                  onPressed: () {
+                    register(appLocalizations);
+                  },
+                ),
                 SizedBox(height: MediaQuery.sizeOf(context).height * 0.02),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Already Have Account ? ",
+                      appLocalizations.alreadyHaveAccount,
                       style: Theme.of(context).textTheme.titleMedium!.copyWith(
                         color: settingthemeProvider.isDark
                             ? Themeapp.white
@@ -112,7 +119,7 @@ class _RegisterScreanState extends State<RegisterScrean> {
                         ).pushReplacementNamed(LoginScrean.routName);
                       },
                       child: Text(
-                        "Login",
+                        appLocalizations.login,
                         style: Theme.of(context).textTheme.titleMedium!
                             .copyWith(
                               color: Themeapp.primary,
@@ -133,7 +140,7 @@ class _RegisterScreanState extends State<RegisterScrean> {
     );
   }
 
-  void register() {
+  void register(AppLocalizations appLocalizations) {
     if (formState.currentState!.validate()) {
       FirebaseServices.register(
             name: username.text,
@@ -145,7 +152,10 @@ class _RegisterScreanState extends State<RegisterScrean> {
               context,
               listen: false,
             ).updateCurrentUser(user);
-            Navigator.of(context).pushReplacementNamed(HomeScrean.routName);
+            Utility.showSuccessMessage(
+              appLocalizations.theaccounthasbeencreatedsuccessfully,
+            );
+            Navigator.of(context).pushReplacementNamed(LoginScrean.routName);
           })
           .catchError((error) {
             String? errorMessage;

@@ -2,6 +2,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:evently_app/Event/edit_event_model.dart';
 import 'package:evently_app/firebase_services.dart';
 import 'package:evently_app/home_screan.dart';
+import 'package:evently_app/l10n/app_localizations.dart';
 import 'package:evently_app/model/event_model.dart';
 import 'package:evently_app/provider/events_provider.dart';
 import 'package:evently_app/provider/settingtheme_provider.dart';
@@ -22,11 +23,12 @@ class EventDetailsScrean extends StatefulWidget {
 class _EventDetailsScreanState extends State<EventDetailsScrean> {
   @override
   Widget build(BuildContext context) {
+    AppLocalizations appLocalizations = AppLocalizations.of(context)!;
     SettingthemeProvider settingthemeProvider =
         Provider.of<SettingthemeProvider>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text("Event Detals"),
+        title: Text(appLocalizations.eventDetals),
         actions: [
           InkWell(
             onTap: () {
@@ -49,7 +51,7 @@ class _EventDetailsScreanState extends State<EventDetailsScrean> {
                 context: context,
                 dialogType: DialogType.warning,
                 animType: AnimType.rightSlide,
-                title: 'Are you sure want to delete?',
+                title: appLocalizations.deleteMessage,
                 btnCancelOnPress: () {},
                 btnOkOnPress: () {
                   FirebaseServices.deleteEvent(widget.event).then((_) {
@@ -187,7 +189,7 @@ class _EventDetailsScreanState extends State<EventDetailsScrean> {
             ),
             SizedBox(height: 16),
             Text(
-              "Description",
+              appLocalizations.description,
               style: Theme.of(context).textTheme.titleMedium!.copyWith(
                 color: settingthemeProvider.isDark ? Themeapp.white : null,
               ),
