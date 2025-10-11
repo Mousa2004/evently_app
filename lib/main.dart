@@ -11,6 +11,7 @@ import 'package:evently_app/themeapp.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'l10n/app_localizations.dart';
@@ -44,6 +45,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  @override
   void initState() {
     FirebaseAuth.instance.authStateChanges().listen((User? user) {
       if (user == null) {
@@ -61,28 +63,37 @@ class _MyAppState extends State<MyApp> {
         Provider.of<SettinglocalizaionProvider>(context);
     SettingthemeProvider settingthemeProvider =
         Provider.of<SettingthemeProvider>(context);
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
+    return ScreenUtilInit(
+      designSize: const Size(393, 841),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      child: Builder(
+        builder: (context) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
 
-      initialRoute: widget.onboard
-          ? ((FirebaseAuth.instance.currentUser != null)
-                ? HomeScrean.routName
-                : LoginScrean.routName)
-          : Onboarding.routName,
-      routes: {
-        HomeScrean.routName: (_) => HomeScrean(),
-        Onboarding.routName: (_) => Onboarding(),
-        LoginScrean.routName: (_) => LoginScrean(),
-        RegisterScrean.routName: (_) => RegisterScrean(),
-        CreateEventModel.routName: (_) => CreateEventModel(),
-      },
-      theme: Themeapp.themeAppLight,
-      darkTheme: Themeapp.themeAppDark,
-      themeMode: settingthemeProvider.themeMode,
+            initialRoute: widget.onboard
+                ? ((FirebaseAuth.instance.currentUser != null)
+                      ? HomeScrean.routName
+                      : LoginScrean.routName)
+                : Onboarding.routName,
+            routes: {
+              HomeScrean.routName: (_) => HomeScrean(),
+              Onboarding.routName: (_) => Onboarding(),
+              LoginScrean.routName: (_) => LoginScrean(),
+              RegisterScrean.routName: (_) => RegisterScrean(),
+              CreateEventModel.routName: (_) => CreateEventModel(),
+            },
+            theme: Themeapp.themeAppLight,
+            darkTheme: Themeapp.themeAppDark,
+            themeMode: settingthemeProvider.themeMode,
 
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
-      locale: Locale(settinglocalizaionProvider.language),
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            locale: Locale(settinglocalizaionProvider.language),
+          );
+        },
+      ),
     );
   }
 }

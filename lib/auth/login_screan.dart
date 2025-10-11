@@ -12,6 +12,7 @@ import 'package:evently_app/provider/users_provider.dart';
 import 'package:evently_app/themeapp.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 
@@ -35,13 +36,13 @@ class _LoginScreanState extends State<LoginScrean> {
     if (googleUser == null) return;
 
     // Obtain the auth details from the request
-    final GoogleSignInAuthentication? googleAuth =
-        await googleUser?.authentication;
+    final GoogleSignInAuthentication googleAuth =
+        await googleUser.authentication;
 
     // Create a new credential
     final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth?.accessToken,
-      idToken: googleAuth?.idToken,
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
     );
 
     // Once signed in, return the UserCredential
@@ -62,7 +63,7 @@ class _LoginScreanState extends State<LoginScrean> {
             child: Column(
               children: [
                 LogoSrean(),
-                SizedBox(height: MediaQuery.sizeOf(context).height * 0.04),
+                SizedBox(height: MediaQuery.sizeOf(context).height * 0.04.h),
                 Form(
                   key: formState,
                   child: Column(
@@ -73,10 +74,11 @@ class _LoginScreanState extends State<LoginScrean> {
                         controller: email,
                         validator: (p0) {
                           if (p0 == '') return appLocalizations.enteryouremail;
+                          return null;
                         },
                       ),
                       SizedBox(
-                        height: MediaQuery.sizeOf(context).height * 0.02,
+                        height: MediaQuery.sizeOf(context).height * 0.02.h,
                       ),
                       Customedtextformfieled(
                         controller: password,
@@ -86,6 +88,7 @@ class _LoginScreanState extends State<LoginScrean> {
                           if (p0 == '' || p0!.length < 6) {
                             return appLocalizations.passwordmustatlest6number;
                           }
+                          return null;
                         },
                         obscureText: _obscureText,
                         suffixIcon: IconButton(
@@ -106,7 +109,7 @@ class _LoginScreanState extends State<LoginScrean> {
                     ],
                   ),
                 ),
-                SizedBox(height: MediaQuery.sizeOf(context).height * 0.01),
+                SizedBox(height: MediaQuery.sizeOf(context).height * 0.01.h),
                 SizedBox(
                   width: double.infinity,
                   child: InkWell(
@@ -161,14 +164,14 @@ class _LoginScreanState extends State<LoginScrean> {
                     ),
                   ),
                 ),
-                SizedBox(height: MediaQuery.sizeOf(context).height * 0.02),
+                SizedBox(height: MediaQuery.sizeOf(context).height * 0.02.h),
                 Customedbutton(
                   name: appLocalizations.login,
                   onPressed: () {
                     login(appLocalizations);
                   },
                 ),
-                SizedBox(height: MediaQuery.sizeOf(context).height * 0.02),
+                SizedBox(height: MediaQuery.sizeOf(context).height * 0.02.h),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -200,7 +203,7 @@ class _LoginScreanState extends State<LoginScrean> {
                     ),
                   ],
                 ),
-                SizedBox(height: MediaQuery.sizeOf(context).height * 0.02),
+                SizedBox(height: MediaQuery.sizeOf(context).height * 0.02.h),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 45),
                   child: Row(
@@ -215,7 +218,7 @@ class _LoginScreanState extends State<LoginScrean> {
                     ],
                   ),
                 ),
-                SizedBox(height: MediaQuery.sizeOf(context).height * 0.02),
+                SizedBox(height: MediaQuery.sizeOf(context).height * 0.02.h),
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(16),
@@ -231,8 +234,8 @@ class _LoginScreanState extends State<LoginScrean> {
                       children: [
                         Image.asset(
                           "assets/images/google.png",
-                          height: 26,
-                          width: 26,
+                          height: 26.h,
+                          width: 26.w,
                           fit: BoxFit.scaleDown,
                         ),
                         Text(

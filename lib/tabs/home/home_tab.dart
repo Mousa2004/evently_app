@@ -3,6 +3,7 @@ import 'package:evently_app/provider/events_provider.dart';
 import 'package:evently_app/tabs/home/TabBar/tabbar_header.dart';
 import 'package:evently_app/tabs/home/event_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 class HomeTab extends StatefulWidget {
@@ -52,7 +53,7 @@ class _HomeTabState extends State<HomeTab> {
                       event: eventsProvider.eventsDisplay[index],
                     ),
                   ),
-                  separatorBuilder: (_, _) => SizedBox(height: 16),
+                  separatorBuilder: (_, _) => SizedBox(height: 16.h),
                   itemCount: eventsProvider.eventsDisplay.length,
                 ),
               ),

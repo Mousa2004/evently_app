@@ -6,6 +6,7 @@ import 'package:evently_app/provider/users_provider.dart';
 import 'package:evently_app/tabs/home/TabBar/tabbar_item.dart';
 import 'package:evently_app/themeapp.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 class TabbarHeader extends StatefulWidget {
@@ -28,13 +29,13 @@ class _TabbarHeaderState extends State<TabbarHeader> {
             ? Themeapp.backgroundDark
             : Themeapp.primary,
         borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(16),
-          bottomRight: Radius.circular(16),
+          bottomLeft: Radius.circular(16.r),
+          bottomRight: Radius.circular(16.r),
         ),
       ),
       child: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(left: 16),
+          padding: const EdgeInsetsDirectional.only(start: 16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -47,7 +48,7 @@ class _TabbarHeaderState extends State<TabbarHeader> {
 
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
-              SizedBox(height: MediaQuery.sizeOf(context).height * 0.02),
+              SizedBox(height: MediaQuery.sizeOf(context).height * 0.02.h),
               DefaultTabController(
                 length: CategoriesModel.categories.length + 1,
                 child: TabBar(

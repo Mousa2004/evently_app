@@ -8,6 +8,7 @@ import 'package:evently_app/provider/events_provider.dart';
 import 'package:evently_app/provider/settingtheme_provider.dart';
 import 'package:evently_app/themeapp.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -40,8 +41,8 @@ class _EventDetailsScreanState extends State<EventDetailsScrean> {
             },
             child: Image.asset(
               "assets/images/edit_icon.png",
-              height: 24,
-              width: 24,
+              height: 24.h,
+              width: 24.w,
               fit: BoxFit.scaleDown,
             ),
           ),
@@ -76,22 +77,22 @@ class _EventDetailsScreanState extends State<EventDetailsScrean> {
           children: [
             Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(16.r),
                 border: settingthemeProvider.isDark
                     ? Border.all(color: Themeapp.primary)
                     : null,
               ),
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(16.r),
                 child: Image.asset(
                   "assets/images/${widget.event.category.imageName}.png",
-                  height: MediaQuery.sizeOf(context).height * 0.23,
+                  height: MediaQuery.sizeOf(context).height * 0.23.h,
                   width: MediaQuery.sizeOf(context).width,
                   fit: BoxFit.fill,
                 ),
               ),
             ),
-            SizedBox(height: 16),
+            SizedBox(height: 16.h),
             Text(
               widget.event.title,
               style: Theme.of(context).textTheme.headlineSmall!.copyWith(
@@ -99,7 +100,7 @@ class _EventDetailsScreanState extends State<EventDetailsScrean> {
                 fontWeight: FontWeight.w500,
               ),
             ),
-            SizedBox(height: 16),
+            SizedBox(height: 16.h),
             Container(
               padding: EdgeInsets.all(8),
               decoration: BoxDecoration(
@@ -112,16 +113,16 @@ class _EventDetailsScreanState extends State<EventDetailsScrean> {
                     padding: EdgeInsets.all(12),
                     decoration: BoxDecoration(
                       color: Themeapp.primary,
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(8.r),
                     ),
                     child: Image.asset(
                       "assets/images/calender.png",
-                      height: 24,
-                      width: 24,
+                      height: 24.h,
+                      width: 24.w,
                       fit: BoxFit.scaleDown,
                     ),
                   ),
-                  SizedBox(width: 16),
+                  SizedBox(width: 16.w),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -130,7 +131,7 @@ class _EventDetailsScreanState extends State<EventDetailsScrean> {
                         style: Theme.of(context).textTheme.titleMedium!
                             .copyWith(color: Themeapp.primary),
                       ),
-                      SizedBox(height: 4),
+                      SizedBox(height: 4.h),
                       Text(
                         DateFormat('h:mm a').format(widget.event.dateTime),
                         style: Theme.of(context).textTheme.titleMedium!
@@ -145,11 +146,11 @@ class _EventDetailsScreanState extends State<EventDetailsScrean> {
                 ],
               ),
             ),
-            SizedBox(height: 16),
+            SizedBox(height: 16.h),
             Container(
               padding: EdgeInsets.all(8),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(16.r),
                 border: Border.all(color: Themeapp.primary),
               ),
               child: Row(
@@ -158,16 +159,16 @@ class _EventDetailsScreanState extends State<EventDetailsScrean> {
                     padding: EdgeInsets.all(12),
                     decoration: BoxDecoration(
                       color: Themeapp.primary,
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(8.r),
                     ),
                     child: SvgPicture.asset(
                       "assets/icons/location.svg",
-                      height: 24,
-                      width: 24,
+                      height: 24.h,
+                      width: 24.w,
                       fit: BoxFit.scaleDown,
                     ),
                   ),
-                  SizedBox(width: 16),
+                  SizedBox(width: 16.w),
                   Text(
                     "Cairo , Egypt",
                     style: Theme.of(
@@ -177,24 +178,24 @@ class _EventDetailsScreanState extends State<EventDetailsScrean> {
                 ],
               ),
             ),
-            SizedBox(height: 16),
+            SizedBox(height: 16.h),
             SizedBox(
-              height: MediaQuery.sizeOf(context).height * 0.40,
+              height: MediaQuery.sizeOf(context).height * 0.40.h,
               child: Container(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(16.r),
                   border: Border.all(color: Themeapp.primary),
                 ),
               ),
             ),
-            SizedBox(height: 16),
+            SizedBox(height: 16.h),
             Text(
               appLocalizations.description,
               style: Theme.of(context).textTheme.titleMedium!.copyWith(
                 color: settingthemeProvider.isDark ? Themeapp.white : null,
               ),
             ),
-            SizedBox(height: 8),
+            SizedBox(height: 8.h),
             Text(
               widget.event.description,
               style: Theme.of(context).textTheme.titleMedium,

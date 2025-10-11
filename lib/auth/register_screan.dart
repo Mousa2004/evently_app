@@ -10,6 +10,7 @@ import 'package:evently_app/provider/users_provider.dart';
 import 'package:evently_app/themeapp.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 class RegisterScrean extends StatefulWidget {
@@ -39,7 +40,7 @@ class _RegisterScreanState extends State<RegisterScrean> {
             child: Column(
               children: [
                 LogoSrean(),
-                SizedBox(height: MediaQuery.sizeOf(context).height * 0.04),
+                SizedBox(height: MediaQuery.sizeOf(context).height * 0.04.h),
                 Form(
                   key: formState,
                   child: Column(
@@ -50,10 +51,11 @@ class _RegisterScreanState extends State<RegisterScrean> {
                         controller: username,
                         validator: (val) {
                           if (val == "") return appLocalizations.enteryourname;
+                          return null;
                         },
                       ),
                       SizedBox(
-                        height: MediaQuery.sizeOf(context).height * 0.02,
+                        height: MediaQuery.sizeOf(context).height * 0.02.h,
                       ),
                       Customedtextformfieled(
                         hint: appLocalizations.email,
@@ -61,10 +63,11 @@ class _RegisterScreanState extends State<RegisterScrean> {
                         controller: email,
                         validator: (val) {
                           if (val == "") return appLocalizations.enteryouremail;
+                          return null;
                         },
                       ),
                       SizedBox(
-                        height: MediaQuery.sizeOf(context).height * 0.02,
+                        height: MediaQuery.sizeOf(context).height * 0.02.h,
                       ),
                       Customedtextformfieled(
                         controller: password,
@@ -73,6 +76,7 @@ class _RegisterScreanState extends State<RegisterScrean> {
                         validator: (val) {
                           if (val == "")
                             return appLocalizations.enteryourpassword;
+                          return null;
                         },
                         obscureText: _obscureText,
                         suffixIcon: IconButton(
@@ -93,14 +97,14 @@ class _RegisterScreanState extends State<RegisterScrean> {
                     ],
                   ),
                 ),
-                SizedBox(height: MediaQuery.sizeOf(context).height * 0.02),
+                SizedBox(height: MediaQuery.sizeOf(context).height * 0.02.h),
                 Customedbutton(
                   name: appLocalizations.createAccount,
                   onPressed: () {
                     register(appLocalizations);
                   },
                 ),
-                SizedBox(height: MediaQuery.sizeOf(context).height * 0.02),
+                SizedBox(height: MediaQuery.sizeOf(context).height * 0.02.h),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

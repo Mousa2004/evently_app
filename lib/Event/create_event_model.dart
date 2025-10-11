@@ -11,6 +11,7 @@ import 'package:evently_app/tabs/home/TabBar/tabbar_item.dart';
 import 'package:evently_app/themeapp.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -46,7 +47,7 @@ class _CreateEventModelState extends State<CreateEventModel> {
               padding: const EdgeInsets.all(16),
               child: Container(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(16.r),
                   border: settingthemeProvider.isDark
                       ? Border.all(color: Themeapp.primary)
                       : null,
@@ -55,8 +56,8 @@ class _CreateEventModelState extends State<CreateEventModel> {
                   borderRadius: BorderRadius.circular(16),
                   child: Image.asset(
                     "assets/images/${selectCategory.imageName}.png",
-                    height: MediaQuery.sizeOf(context).height * 0.23,
-                    width: MediaQuery.sizeOf(context).width,
+                    height: MediaQuery.sizeOf(context).height * 0.23.h,
+                    width: MediaQuery.sizeOf(context).width.w,
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -118,13 +119,13 @@ class _CreateEventModelState extends State<CreateEventModel> {
                             ),
                       ),
                     ),
-                    SizedBox(height: 8),
+                    SizedBox(height: 8.h),
                     Customedtextformfieled(
                       hint: appLocalizations.eventTitle,
                       imageName: "title_edit",
                       controller: title,
                     ),
-                    SizedBox(height: 16),
+                    SizedBox(height: 16.h),
                     SizedBox(
                       width: double.infinity,
                       child: Text(
@@ -137,19 +138,19 @@ class _CreateEventModelState extends State<CreateEventModel> {
                             ),
                       ),
                     ),
-                    SizedBox(height: 8),
+                    SizedBox(height: 8.h),
                     Customedtextformfieled(
                       hint: appLocalizations.eventDescription,
                       imageName: "title_edit",
                       controller: description,
                     ),
-                    SizedBox(height: 16),
+                    SizedBox(height: 16.h),
                     Row(
                       children: [
                         SvgPicture.asset(
                           "assets/icons/data.svg",
-                          height: 24,
-                          width: 24,
+                          height: 24.h,
+                          width: 24.w,
                           fit: BoxFit.scaleDown,
                           colorFilter: settingthemeProvider.isDark
                               ? ColorFilter.mode(
@@ -158,7 +159,7 @@ class _CreateEventModelState extends State<CreateEventModel> {
                                 )
                               : null,
                         ),
-                        SizedBox(width: 5),
+                        SizedBox(width: 5.w),
                         Text(
                           appLocalizations.eventData,
                           style: Theme.of(context).textTheme.titleMedium!
@@ -191,13 +192,13 @@ class _CreateEventModelState extends State<CreateEventModel> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 16),
+                    SizedBox(height: 16.h),
                     Row(
                       children: [
                         SvgPicture.asset(
                           "assets/icons/time.svg",
-                          height: 24,
-                          width: 24,
+                          height: 24.h,
+                          width: 24.w,
                           fit: BoxFit.scaleDown,
                           colorFilter: settingthemeProvider.isDark
                               ? ColorFilter.mode(
@@ -206,7 +207,7 @@ class _CreateEventModelState extends State<CreateEventModel> {
                                 )
                               : null,
                         ),
-                        SizedBox(width: 5),
+                        SizedBox(width: 5.w),
                         Text(
                           appLocalizations.eventTime,
 
@@ -239,7 +240,7 @@ class _CreateEventModelState extends State<CreateEventModel> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 16),
+                    SizedBox(height: 16.h),
                     SizedBox(
                       width: double.infinity,
                       child: Text(
@@ -247,7 +248,7 @@ class _CreateEventModelState extends State<CreateEventModel> {
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
                     ),
-                    SizedBox(height: 8),
+                    SizedBox(height: 8.h),
                     Container(
                       padding: EdgeInsets.all(8),
                       decoration: BoxDecoration(
@@ -260,13 +261,13 @@ class _CreateEventModelState extends State<CreateEventModel> {
                             padding: EdgeInsets.all(12),
                             decoration: BoxDecoration(
                               color: Themeapp.primary,
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(8.r),
                             ),
                             child: SvgPicture.asset(
                               "assets/icons/location.svg",
                             ),
                           ),
-                          SizedBox(width: 8),
+                          SizedBox(width: 8.w),
                           Text(
                             appLocalizations.chooseEventLocation,
                             style: Theme.of(context).textTheme.titleMedium!
@@ -275,7 +276,7 @@ class _CreateEventModelState extends State<CreateEventModel> {
                         ],
                       ),
                     ),
-                    SizedBox(height: 12),
+                    SizedBox(height: 12.h),
                     Customedbutton(
                       name: appLocalizations.addEvent,
                       onPressed: () {

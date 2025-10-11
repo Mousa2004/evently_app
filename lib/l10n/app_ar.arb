@@ -43,5 +43,6 @@
     "pleasecheckyouremailtoresetyourpassword":"من فضلك تفحص ايميلك لاعادة تعيين كلمةالمرور",
     "reEnteryouremailaddress":"أعد ادخال الايميل",
     "youhavesuccessfullyloggedin":"تم تسجيل الدخول بنجاح",
-    "theaccounthasbeencreatedsuccessfully":"تم انشاء الحساب بنجاح"
+    "theaccounthasbeencreatedsuccessfully":"تم انشاء الحساب بنجاح",
+    "logout":"تسجيل الخروج"
 }

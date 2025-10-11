@@ -4,6 +4,7 @@ import 'package:evently_app/provider/settingtheme_provider.dart';
 import 'package:evently_app/provider/users_provider.dart';
 import 'package:evently_app/themeapp.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -23,7 +24,7 @@ class EventItem extends StatelessWidget {
         children: [
           Container(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(16.r),
               border: settingthemeProvider.isDark
                   ? Border.all(color: Themeapp.primary)
                   : null,
@@ -32,7 +33,7 @@ class EventItem extends StatelessWidget {
               borderRadius: BorderRadius.circular(16),
               child: Image.asset(
                 "assets/images/${event.category.imageName}.png",
-                height: MediaQuery.sizeOf(context).height * 0.26,
+                height: MediaQuery.sizeOf(context).height * 0.26.h,
                 width: MediaQuery.sizeOf(context).width,
                 fit: BoxFit.fill,
               ),
@@ -42,7 +43,7 @@ class EventItem extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
             margin: EdgeInsets.only(top: 8, left: 8),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(8.r),
               color: settingthemeProvider.isDark
                   ? Themeapp.transparent
                   : Themeapp.white,
@@ -70,7 +71,7 @@ class EventItem extends StatelessWidget {
             child: Container(
               padding: EdgeInsets.symmetric(vertical: 10, horizontal: 8),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(8.r),
                 color: settingthemeProvider.isDark
                     ? Themeapp.transparent
                     : Themeapp.white,

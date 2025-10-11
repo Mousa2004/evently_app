@@ -43,7 +43,8 @@
     "pleasecheckyouremailtoresetyourpassword":"Please check your email to reset your password",
     "reEnteryouremailaddress":"Re-enter your email address",
     "youhavesuccessfullyloggedin":"You have successfully logged in.",
-    "theaccounthasbeencreatedsuccessfully":"The account has been created successfully."
+    "theaccounthasbeencreatedsuccessfully":"The account has been created successfully.",
+    "logout":"Logout"
 
 
 

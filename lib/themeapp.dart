@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class Themeapp {
   static const Color primary = Color(0xFF5669FF);
@@ -14,7 +15,7 @@ class Themeapp {
     appBarTheme: AppBarTheme(
       titleTextStyle: TextStyle(
         color: primary,
-        fontSize: 20,
+        fontSize: 20.sp,
         fontWeight: FontWeight.w400,
       ),
       centerTitle: true,
@@ -22,22 +23,22 @@ class Themeapp {
     ),
     textTheme: TextTheme(
       titleLarge: TextStyle(
-        fontSize: 20,
+        fontSize: 20.sp,
         fontWeight: FontWeight.w700,
         color: primary,
       ),
       titleMedium: TextStyle(
-        fontSize: 16,
+        fontSize: 16.sp,
         fontWeight: FontWeight.w500,
         color: black,
       ),
       titleSmall: TextStyle(
-        fontSize: 14,
+        fontSize: 14.sp,
         fontWeight: FontWeight.w500,
         color: white,
       ),
       headlineSmall: TextStyle(
-        fontSize: 24,
+        fontSize: 24.sp,
         fontWeight: FontWeight.w700,
         color: white,
       ),
@@ -48,7 +49,9 @@ class Themeapp {
     ),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: primary,
-      shape: CircleBorder(side: BorderSide(color: white, width: 5)),
+      shape: CircleBorder(
+        side: BorderSide(color: white, width: 5.w),
+      ),
     ),
   );
 
@@ -57,7 +60,7 @@ class Themeapp {
     appBarTheme: AppBarTheme(
       titleTextStyle: TextStyle(
         color: primary,
-        fontSize: 20,
+        fontSize: 20.sp,
         fontWeight: FontWeight.w400,
       ),
       backgroundColor: backgroundDark,
@@ -66,22 +69,22 @@ class Themeapp {
     ),
     textTheme: TextTheme(
       titleLarge: TextStyle(
-        fontSize: 20,
+        fontSize: 20.sp,
         fontWeight: FontWeight.w700,
         color: primary,
       ),
       titleMedium: TextStyle(
-        fontSize: 16,
+        fontSize: 16.sp,
         fontWeight: FontWeight.w500,
         color: black,
       ),
       titleSmall: TextStyle(
-        fontSize: 14,
+        fontSize: 14.sp,
         fontWeight: FontWeight.w500,
         color: white,
       ),
       headlineSmall: TextStyle(
-        fontSize: 24,
+        fontSize: 24.sp,
         fontWeight: FontWeight.w700,
         color: white,
       ),
@@ -92,7 +95,9 @@ class Themeapp {
     ),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: backgroundDark,
-      shape: CircleBorder(side: BorderSide(color: white, width: 5)),
+      shape: CircleBorder(
+        side: BorderSide(color: white, width: 5.w),
+      ),
     ),
   );
 }

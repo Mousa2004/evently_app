@@ -1,6 +1,7 @@
 import 'package:evently_app/provider/settingtheme_provider.dart';
 import 'package:evently_app/themeapp.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
@@ -35,7 +36,7 @@ class TabbarItem extends StatelessWidget {
               ? Themeapp.primary
               : colorBorder ?? Themeapp.white,
         ),
-        borderRadius: BorderRadius.circular(46),
+        borderRadius: BorderRadius.circular(46.r),
         color: isSelect
             ? (settingthemeProvider.isDark
                   ? Themeapp.primary
@@ -48,15 +49,15 @@ class TabbarItem extends StatelessWidget {
         children: [
           SvgPicture.asset(
             "assets/icons/$imageIcon.svg",
-            height: 24,
-            width: 24,
+            height: 24.h,
+            width: 24.w,
             fit: BoxFit.scaleDown,
             colorFilter: ColorFilter.mode(
               isSelect ? selectColor : unselectColor,
               BlendMode.srcIn,
             ),
           ),
-          SizedBox(width: 5),
+          SizedBox(width: 5.w),
           Text(
             text,
             style: Theme.of(context).textTheme.titleMedium!.copyWith(

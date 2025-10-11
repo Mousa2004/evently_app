@@ -7,6 +7,7 @@ import 'package:evently_app/tabs/map/map_tab.dart';
 import 'package:evently_app/tabs/profile/profile_tab.dart';
 import 'package:evently_app/themeapp.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomeScrean extends StatefulWidget {
   static const String routName = "/home";
@@ -39,11 +40,11 @@ class _HomeScreanState extends State<HomeScrean> {
         selectedItemColor: Themeapp.white,
         unselectedItemColor: Themeapp.white,
         selectedLabelStyle: TextStyle(
-          fontSize: 12,
+          fontSize: 12.sp,
           fontWeight: FontWeight.bold,
         ),
         unselectedLabelStyle: TextStyle(
-          fontSize: 12,
+          fontSize: 12.sp,
           fontWeight: FontWeight.bold,
         ),
         items: [

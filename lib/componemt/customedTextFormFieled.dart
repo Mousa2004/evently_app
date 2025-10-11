@@ -1,6 +1,7 @@
 import 'package:evently_app/provider/settingtheme_provider.dart';
 import 'package:evently_app/themeapp.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 class Customedtextformfieled extends StatelessWidget {
@@ -44,7 +45,7 @@ class Customedtextformfieled extends StatelessWidget {
       controller: controller,
       decoration: InputDecoration(
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(16.r),
           borderSide: BorderSide(
             color: settingthemeProvider.isDark
                 ? Themeapp.primary
@@ -52,7 +53,7 @@ class Customedtextformfieled extends StatelessWidget {
           ),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(16.r),
           borderSide: BorderSide(
             color: settingthemeProvider.isDark
                 ? Themeapp.primary
@@ -60,11 +61,11 @@ class Customedtextformfieled extends StatelessWidget {
           ),
         ),
         focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(16.r),
           borderSide: BorderSide(color: Themeapp.red),
         ),
         errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(16.r),
           borderSide: BorderSide(color: Themeapp.red),
         ),
         hintText: hint,
@@ -73,15 +74,15 @@ class Customedtextformfieled extends StatelessWidget {
               ? Themeapp.white
               : colorHint ?? Themeapp.grey,
         ),
-        prefixIcon: imageName != null && imageName.isNotEmpty
+        prefixIcon: imageName.isNotEmpty
             ? Image.asset(
                 "assets/images/$imageName.png",
                 color: settingthemeProvider.isDark ? Themeapp.white : null,
-                height: 24,
-                width: 24,
+                height: 24.h,
+                width: 24.w,
                 fit: BoxFit.scaleDown,
               )
-            : SizedBox(width: 0),
+            : SizedBox(width: 0.w),
         suffixIcon: suffixIcon,
       ),
       autovalidateMode: AutovalidateMode.onUserInteraction,

@@ -144,4 +144,7 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get theaccounthasbeencreatedsuccessfully =>
       'The account has been created successfully.';
+
+  @override
+  String get logout => 'Logout';
 }

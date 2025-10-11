@@ -143,4 +143,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get theaccounthasbeencreatedsuccessfully => 'تم انشاء الحساب بنجاح';
+
+  @override
+  String get logout => 'تسجيل الخروج';
 }

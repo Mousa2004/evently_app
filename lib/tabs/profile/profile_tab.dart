@@ -7,6 +7,7 @@ import 'package:evently_app/provider/users_provider.dart';
 import 'package:evently_app/tabs/profile/profile_header.dart';
 import 'package:evently_app/themeapp.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 
@@ -54,11 +55,11 @@ class _ProfileTabState extends State<ProfileTab> {
                 ),
               ),
 
-              SizedBox(height: 16),
+              SizedBox(height: 16.h),
               Container(
                 decoration: BoxDecoration(
                   border: Border.all(color: Themeapp.primary),
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(16.r),
                 ),
                 child: DropdownButton(
                   padding: EdgeInsets.symmetric(horizontal: 16),
@@ -67,7 +68,7 @@ class _ProfileTabState extends State<ProfileTab> {
                   underline: SizedBox(),
                   value: settinglocalizaionProvider.language,
                   dropdownColor: Themeapp.white,
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(16.r),
 
                   items: getLanguages(appLocalizations)
                       .map(
@@ -86,7 +87,7 @@ class _ProfileTabState extends State<ProfileTab> {
                   },
                 ),
               ),
-              SizedBox(height: 16),
+              SizedBox(height: 16.h),
               SizedBox(
                 width: double.infinity,
                 child: Text(
@@ -96,11 +97,11 @@ class _ProfileTabState extends State<ProfileTab> {
                   ).textTheme.titleLarge!.copyWith(color: Themeapp.black),
                 ),
               ),
-              SizedBox(height: 16),
+              SizedBox(height: 16.h),
               Container(
                 decoration: BoxDecoration(
                   border: Border.all(color: Themeapp.primary),
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(16.r),
                 ),
                 child: DropdownButton<String>(
                   padding: EdgeInsets.symmetric(horizontal: 16),
@@ -112,7 +113,7 @@ class _ProfileTabState extends State<ProfileTab> {
                       ? appLocalizations.dark
                       : appLocalizations.light,
                   dropdownColor: Themeapp.white,
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(16.r),
 
                   items: getTheme(appLocalizations)
                       .map(
@@ -143,15 +144,15 @@ class _ProfileTabState extends State<ProfileTab> {
           padding: EdgeInsets.symmetric(vertical: 8),
           decoration: BoxDecoration(
             color: Themeapp.red,
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(16.r),
           ),
           child: MaterialButton(
             child: Row(
               children: [
                 Icon(Icons.exit_to_app, color: Themeapp.white),
-                SizedBox(width: 10),
+                SizedBox(width: 10.w),
                 Text(
-                  "Logout",
+                  appLocalizations.logout,
                   style: Theme.of(context).textTheme.titleLarge!.copyWith(
                     color: Themeapp.white,
                     fontWeight: FontWeight.w400,

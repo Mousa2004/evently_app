@@ -1,5 +1,6 @@
 import 'package:evently_app/themeapp.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SwitchItem extends StatelessWidget {
   final String name;
@@ -26,27 +27,27 @@ class SwitchItem extends StatelessWidget {
         Container(
           decoration: BoxDecoration(
             border: Border.all(color: Themeapp.primary, width: 2),
-            borderRadius: BorderRadius.circular(30),
+            borderRadius: BorderRadius.circular(30.r),
           ),
           child: Row(
             children: [
               Container(
                 decoration: BoxDecoration(
                   border: Border.all(color: Themeapp.primary),
-                  borderRadius: BorderRadius.circular(30),
+                  borderRadius: BorderRadius.circular(30.r),
                 ),
                 child: Image.asset(
                   "assets/images/$imageName1.png",
-                  height: 21,
-                  width: 21,
+                  height: 21.h,
+                  width: 21.w,
                   fit: BoxFit.scaleDown,
                 ),
               ),
-              SizedBox(width: 20),
+              SizedBox(width: 20.w),
               Image.asset(
                 "assets/images/$imageName2.png",
-                height: 21,
-                width: 21,
+                height: 21.h,
+                width: 21.w,
                 fit: BoxFit.scaleDown,
               ),
             ],

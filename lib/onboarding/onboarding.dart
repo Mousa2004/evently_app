@@ -3,6 +3,7 @@ import 'package:evently_app/onboarding/onboarding_item.dart';
 import 'package:evently_app/onboarding/switch_item.dart';
 import 'package:evently_app/themeapp.dart' show Themeapp;
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -58,7 +59,7 @@ class _OnboardingState extends State<Onboarding> {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
             children: [
-              SizedBox(height: MediaQuery.sizeOf(context).height * 0.03),
+              SizedBox(height: MediaQuery.sizeOf(context).height * 0.03.h),
               Expanded(
                 child: SizedBox(
                   child: IntroductionScreen(
@@ -72,8 +73,8 @@ class _OnboardingState extends State<Onboarding> {
                       return PageViewModel(
                         image: Image.asset(
                           "${item['image']}",
-                          height: MediaQuery.sizeOf(context).height * 0.9,
-                          width: MediaQuery.sizeOf(context).width * 0.9,
+                          height: MediaQuery.sizeOf(context).height * 0.9.h,
+                          width: MediaQuery.sizeOf(context).width * 0.9.w,
                           fit: BoxFit.fill,
                         ),
                         titleWidget: SizedBox(
@@ -90,7 +91,8 @@ class _OnboardingState extends State<Onboarding> {
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
                             SizedBox(
-                              height: MediaQuery.sizeOf(context).height * 0.03,
+                              height:
+                                  MediaQuery.sizeOf(context).height * 0.03.h,
                             ),
                             currentIndex != 0
                                 ? Container()
@@ -108,7 +110,7 @@ class _OnboardingState extends State<Onboarding> {
                                               MediaQuery.sizeOf(
                                                 context,
                                               ).height *
-                                              0.03,
+                                              0.03.h,
                                         ),
                                         SwitchItem(
                                           name: "Theme",
@@ -127,13 +129,13 @@ class _OnboardingState extends State<Onboarding> {
 
                     next: OnboardingItem(
                       margin: EdgeInsets.only(
-                        left: MediaQuery.sizeOf(context).width * 0.13,
+                        left: MediaQuery.sizeOf(context).width * 0.13.w,
                       ),
                       textDirection: TextDirection.rtl,
                     ),
                     done: OnboardingItem(
                       margin: EdgeInsets.only(
-                        left: MediaQuery.sizeOf(context).width * 0.13,
+                        left: MediaQuery.sizeOf(context).width * 0.13.w,
                       ),
                       textDirection: TextDirection.rtl,
                     ),
@@ -148,7 +150,7 @@ class _OnboardingState extends State<Onboarding> {
 
                     back: OnboardingItem(
                       margin: EdgeInsets.only(
-                        right: MediaQuery.sizeOf(context).width * 0.13,
+                        right: MediaQuery.sizeOf(context).width * 0.13.w,
                       ),
                     ),
                     dotsDecorator: currentIndex == 0
@@ -161,7 +163,7 @@ class _OnboardingState extends State<Onboarding> {
                             activeColor: Themeapp.primary,
                             activeSize: Size(20, 10),
                             activeShape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(36),
+                              borderRadius: BorderRadius.circular(36.r),
                             ),
                           ),
                   ),
@@ -175,7 +177,7 @@ class _OnboardingState extends State<Onboarding> {
                       margin: EdgeInsets.only(left: 16, right: 16, bottom: 27),
                       decoration: BoxDecoration(
                         color: Themeapp.primary,
-                        borderRadius: BorderRadius.circular(16),
+                        borderRadius: BorderRadius.circular(16.r),
                       ),
                       child: MaterialButton(
                         onPressed: () {
