@@ -1,19 +1,33 @@
-# 🎉 Evently App
+# 📅 Evently App
 
-A new Flutter project.
+[![Flutter](https://img.shields.io/badge/Flutter-3.0-blue?logo=flutter)](https://flutter.dev/)  
+[![Dart](https://img.shields.io/badge/Dart-2.17-blue?logo=dart)](https://dart.dev/)  
+[![Firebase](https://img.shields.io/badge/Firebase-FFCA28?logo=firebase&logoColor=white)](https://firebase.google.com/)  
+[![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 
-## 🚀 Getting Started
+**Evently App** is your personal daily event tracker!  
+Keep track of your daily activities, events, and important moments in an **easy-to-use and beautifully designed app**.  
 
-This project is a starting point for a Flutter application.
+---
 
-A few resources to get you started if this is your first Flutter project:
+## 🌟 Features
+- 📝 Record your daily events and notes  
+- 🔔 Set reminders for important events  
+- 🌙 **Dark & Light Theme** support for comfortable viewing  
+- 🌍 **Localization** support for multiple languages  
+- 🔄 **State Management** using **Provider**  
+- ☁️ **Firebase Integration** for real-time data and cloud storage  
+- 📱 Responsive UI for mobile and tablet devices  
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+---
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 🛠️ Tech Stack
+- **Frontend:** Flutter & Dart  
+- **State Management:** Provider  
+- **Backend:** Firebase (Authentication, Firestore, Realtime Database)  
+- **Theming:** Dark & Light Mode  
+- **Localization:** Multi-language support  
+- **Responsive Design:** Works on all screen sizes  
 
 ---
 
