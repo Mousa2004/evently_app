@@ -74,8 +74,9 @@ class _RegisterScreanState extends State<RegisterScrean> {
                         hint: appLocalizations.password,
                         imageName: "password",
                         validator: (val) {
-                          if (val == "")
+                          if (val == "") {
                             return appLocalizations.enteryourpassword;
+                          }
                           return null;
                         },
                         obscureText: _obscureText,
