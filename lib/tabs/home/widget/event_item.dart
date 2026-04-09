@@ -1,23 +1,32 @@
-import 'package:evently_app/model/event_model.dart';
+import 'package:evently_app/firebase_service/model/categories_model.dart';
+import 'package:evently_app/firebase_service/model/event_model.dart';
 import 'package:evently_app/provider/events_provider.dart';
 import 'package:evently_app/provider/settingtheme_provider.dart';
 import 'package:evently_app/provider/users_provider.dart';
-import 'package:evently_app/themeapp.dart';
+import 'package:evently_app/utils/themeapp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-class EventItem extends StatelessWidget {
+class EventItem extends StatefulWidget {
   final EventModel event;
   const EventItem({super.key, required this.event});
 
   @override
+  State<EventItem> createState() => _EventItemState();
+}
+
+class _EventItemState extends State<EventItem> {
+  @override
   Widget build(BuildContext context) {
+    final category = CategoriesModel.categories(
+      context,
+    ).firstWhere((c) => c.id == widget.event.categoryId);
     SettingthemeProvider settingthemeProvider =
         Provider.of<SettingthemeProvider>(context);
     UsersProvider usersProvider = Provider.of<UsersProvider>(context);
-    bool isFavourite = usersProvider.checkIsFavoritEvent(event.id);
+    bool isFavourite = usersProvider.checkIsFavoritEvent(widget.event.id);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Stack(
@@ -32,7 +41,7 @@ class EventItem extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(16),
               child: Image.asset(
-                "assets/images/${event.category.imageName}.png",
+                "assets/images/${category.imageName}.png",
                 height: MediaQuery.sizeOf(context).height * 0.26.h,
                 width: MediaQuery.sizeOf(context).width,
                 fit: BoxFit.fill,
@@ -51,11 +60,11 @@ class EventItem extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  "${event.dateTime.day}",
+                  "${widget.event.dateTime.day}",
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 Text(
-                  DateFormat('MMM').format(event.dateTime),
+                  DateFormat('MMM').format(widget.event.dateTime),
                   style: Theme.of(context).textTheme.titleSmall!.copyWith(
                     color: Themeapp.primary,
                     fontWeight: FontWeight.bold,
@@ -81,7 +90,7 @@ class EventItem extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      event.title,
+                      widget.event.title,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.titleSmall!.copyWith(
@@ -95,7 +104,7 @@ class EventItem extends StatelessWidget {
                   InkWell(
                     onTap: () {
                       if (isFavourite) {
-                        usersProvider.removeEventFromFavourite(event.id);
+                        usersProvider.removeEventFromFavourite(widget.event.id);
                         Provider.of<EventsProvider>(
                           context,
                           listen: false,
@@ -103,7 +112,7 @@ class EventItem extends StatelessWidget {
                           usersProvider.currentUser!.favouritesEventsIds,
                         );
                       } else {
-                        usersProvider.addEventToFavourite(event.id);
+                        usersProvider.addEventToFavourite(widget.event.id);
                       }
                     },
                     child: Icon(

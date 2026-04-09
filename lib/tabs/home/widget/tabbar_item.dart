@@ -1,5 +1,5 @@
 import 'package:evently_app/provider/settingtheme_provider.dart';
-import 'package:evently_app/themeapp.dart';
+import 'package:evently_app/utils/themeapp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';

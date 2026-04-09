@@ -1,11 +1,11 @@
-import 'package:evently_app/Event/create_event_model.dart';
+import 'package:evently_app/firebase_service/model/create_event_model.dart';
 import 'package:evently_app/l10n/app_localizations.dart';
-import 'package:evently_app/tabs/home/home_tab.dart';
-import 'package:evently_app/tabs/Favourites/favourite_tab.dart';
-import 'package:evently_app/tabs/itemImage_tab.dart';
-import 'package:evently_app/tabs/map/map_tab.dart';
-import 'package:evently_app/tabs/profile/profile_tab.dart';
-import 'package:evently_app/themeapp.dart';
+import 'package:evently_app/tabs/home/presentation/home_tab.dart';
+import 'package:evently_app/tabs/Favourites/presentation/favourite_tab.dart';
+import 'package:evently_app/tabs/home/widget/item_image_tab.dart';
+import 'package:evently_app/tabs/map/presentation/map_tab.dart';
+import 'package:evently_app/tabs/profile/presentation/profile_tab.dart';
+import 'package:evently_app/utils/themeapp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

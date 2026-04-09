@@ -44,5 +44,9 @@
     "reEnteryouremailaddress":"أعد ادخال الايميل",
     "youhavesuccessfullyloggedin":"تم تسجيل الدخول بنجاح",
     "theaccounthasbeencreatedsuccessfully":"تم انشاء الحساب بنجاح",
-    "logout":"تسجيل الخروج"
+    "logout":"تسجيل الخروج",
+    "sport":"الرياضة",
+    "birthday":"عيد الميلاد",
+    "meeting":"الاجتماعات",
+    "all":"الكل"
 }

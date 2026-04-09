@@ -1,4 +1,4 @@
-import 'package:evently_app/themeapp.dart';
+import 'package:evently_app/utils/themeapp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

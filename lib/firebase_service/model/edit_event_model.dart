@@ -1,14 +1,14 @@
-import 'package:evently_app/componemt/customedTextFormFieled.dart';
-import 'package:evently_app/componemt/customedbutton.dart';
-import 'package:evently_app/firebase_services.dart';
+import 'package:evently_app/auth/widget/customedTextFormFieled.dart';
+import 'package:evently_app/auth/widget/customedbutton.dart';
+import 'package:evently_app/firebase_service/firebase_services.dart';
 import 'package:evently_app/home_screan.dart';
 import 'package:evently_app/l10n/app_localizations.dart';
-import 'package:evently_app/model/categories_model.dart';
-import 'package:evently_app/model/event_model.dart';
+import 'package:evently_app/firebase_service/model/categories_model.dart';
+import 'package:evently_app/firebase_service/model/event_model.dart';
 import 'package:evently_app/provider/events_provider.dart';
 import 'package:evently_app/provider/settingtheme_provider.dart';
-import 'package:evently_app/tabs/home/TabBar/tabbar_item.dart';
-import 'package:evently_app/themeapp.dart';
+import 'package:evently_app/tabs/home/widget/tabbar_item.dart';
+import 'package:evently_app/utils/themeapp.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -27,7 +27,7 @@ class EditEventModel extends StatefulWidget {
 
 class _EditEventModelState extends State<EditEventModel> {
   int currentIndex = 0;
-  CategoriesModel selectCategory = CategoriesModel.categories.first;
+  late CategoriesModel selectCategory;
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   GlobalKey<FormState> formstate = GlobalKey<FormState>();
@@ -41,8 +41,25 @@ class _EditEventModelState extends State<EditEventModel> {
     descriptionController.text = widget.event.description;
     selectData = widget.event.dateTime;
     selectTime = TimeOfDay.fromDateTime(widget.event.dateTime);
-    selectCategory = widget.event.category;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      selectCategory = CategoriesModel.categories(
+        context,
+      ).firstWhere((c) => c.id == widget.event.categoryId);
+
+      currentIndex = CategoriesModel.categories(
+        context,
+      ).indexOf(selectCategory);
+
+      setState(() {});
+    });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    titleController.dispose();
+    descriptionController.dispose();
+    super.dispose();
   }
 
   @override
@@ -78,7 +95,7 @@ class _EditEventModelState extends State<EditEventModel> {
             Padding(
               padding: const EdgeInsets.only(left: 16),
               child: DefaultTabController(
-                length: CategoriesModel.categories.length,
+                length: CategoriesModel.categories(context).length,
                 child: TabBar(
                   labelPadding: EdgeInsets.only(right: 10),
                   isScrollable: true,
@@ -88,18 +105,22 @@ class _EditEventModelState extends State<EditEventModel> {
 
                   onTap: (index) {
                     currentIndex = index;
-                    selectCategory = CategoriesModel.categories[currentIndex];
+                    selectCategory = CategoriesModel.categories(
+                      context,
+                    )[currentIndex];
                     setState(() {});
                   },
 
-                  tabs: CategoriesModel.categories
+                  tabs: CategoriesModel.categories(context)
                       .map(
                         (Category) => TabbarItem(
                           imageIcon: Category.imageIcon,
                           text: Category.name,
                           isSelect:
                               currentIndex ==
-                              CategoriesModel.categories.indexOf(Category),
+                              CategoriesModel.categories(
+                                context,
+                              ).indexOf(Category),
                           selectColor: settingthemeProvider.isDark
                               ? Themeapp.black
                               : Themeapp.white,
@@ -321,7 +342,7 @@ class _EditEventModelState extends State<EditEventModel> {
       EventModel event = EventModel(
         id: widget.event.id,
         userId: FirebaseAuth.instance.currentUser!.uid,
-        category: selectCategory,
+        categoryId: selectCategory.id,
         title: titleController.text,
         description: descriptionController.text,
         dateTime: dateTime,

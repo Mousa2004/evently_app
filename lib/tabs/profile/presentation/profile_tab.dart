@@ -1,11 +1,11 @@
-import 'package:evently_app/auth/login_screan.dart';
-import 'package:evently_app/firebase_services.dart';
+import 'package:evently_app/auth/presentation/login_screan.dart';
+import 'package:evently_app/firebase_service/firebase_services.dart';
 import 'package:evently_app/l10n/app_localizations.dart';
 import 'package:evently_app/provider/settingLocalizaion_provider.dart';
 import 'package:evently_app/provider/settingtheme_provider.dart';
 import 'package:evently_app/provider/users_provider.dart';
-import 'package:evently_app/tabs/profile/profile_header.dart';
-import 'package:evently_app/themeapp.dart';
+import 'package:evently_app/tabs/profile/widget/profile_header.dart';
+import 'package:evently_app/utils/themeapp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_sign_in/google_sign_in.dart';

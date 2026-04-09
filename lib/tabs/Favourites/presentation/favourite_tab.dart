@@ -1,10 +1,10 @@
-import 'package:evently_app/Event/event_details_screan.dart';
-import 'package:evently_app/componemt/customedTextFormFieled.dart';
+import 'package:evently_app/Event/presentation/event_details_screan.dart';
+import 'package:evently_app/auth/widget/customedTextFormFieled.dart';
 import 'package:evently_app/l10n/app_localizations.dart';
 import 'package:evently_app/provider/events_provider.dart';
 import 'package:evently_app/provider/users_provider.dart';
-import 'package:evently_app/tabs/home/event_item.dart';
-import 'package:evently_app/themeapp.dart';
+import 'package:evently_app/tabs/home/widget/event_item.dart';
+import 'package:evently_app/utils/themeapp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -47,25 +47,38 @@ class _FavouriteTabState extends State<FavouriteTab> {
               onChanged: eventsProvider.searchFavoriteEvents,
             ),
           ),
-          Expanded(
-            child: ListView.separated(
-              padding: EdgeInsets.only(top: 16),
-              itemBuilder: (context, index) => InkWell(
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => EventDetailsScrean(
+          eventsProvider.favouriteEvents.isEmpty
+              ? Padding(
+                  padding: EdgeInsets.only(top: 300.h),
+                  child: Center(
+                    child: Text(
+                      "There are no favorite events in the list.",
+                      style: Theme.of(context).textTheme.headlineSmall!
+                          .copyWith(color: Themeapp.black, fontSize: 20.sp),
+                    ),
+                  ),
+                )
+              : Expanded(
+                  child: ListView.separated(
+                    padding: EdgeInsets.only(top: 16),
+                    itemBuilder: (context, index) => InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => EventDetailsScrean(
+                              event: eventsProvider.favouriteEvents[index],
+                            ),
+                          ),
+                        );
+                      },
+                      child: EventItem(
                         event: eventsProvider.favouriteEvents[index],
                       ),
                     ),
-                  );
-                },
-                child: EventItem(event: eventsProvider.favouriteEvents[index]),
-              ),
-              separatorBuilder: (_, _) => SizedBox(height: 16.h),
-              itemCount: eventsProvider.favouriteEvents.length,
-            ),
-          ),
+                    separatorBuilder: (_, _) => SizedBox(height: 16.h),
+                    itemCount: eventsProvider.favouriteEvents.length,
+                  ),
+                ),
         ],
       ),
     );

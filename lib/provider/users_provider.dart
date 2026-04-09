@@ -1,5 +1,5 @@
-import 'package:evently_app/firebase_services.dart';
-import 'package:evently_app/model/user_model.dart';
+import 'package:evently_app/firebase_service/firebase_services.dart';
+import 'package:evently_app/firebase_service/model/user_model.dart';
 import 'package:flutter/material.dart';
 
 class UsersProvider with ChangeNotifier {

@@ -1,7 +1,7 @@
-import 'package:evently_app/auth/login_screan.dart';
-import 'package:evently_app/onboarding/onboarding_item.dart';
-import 'package:evently_app/onboarding/switch_item.dart';
-import 'package:evently_app/themeapp.dart' show Themeapp;
+import 'package:evently_app/auth/presentation/login_screan.dart';
+import 'package:evently_app/onboarding/widget/onboarding_item.dart';
+import 'package:evently_app/onboarding/widget/switch_item.dart';
+import 'package:evently_app/utils/themeapp.dart' show Themeapp;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:introduction_screen/introduction_screen.dart';

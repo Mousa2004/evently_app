@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:evently_app/model/event_model.dart';
-import 'package:evently_app/model/user_model.dart';
+import 'package:evently_app/firebase_service/model/event_model.dart';
+import 'package:evently_app/firebase_service/model/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class FirebaseServices {

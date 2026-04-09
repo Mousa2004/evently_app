@@ -1,6 +1,6 @@
-import 'package:evently_app/firebase_services.dart';
-import 'package:evently_app/model/categories_model.dart';
-import 'package:evently_app/model/event_model.dart';
+import 'package:evently_app/firebase_service/firebase_services.dart';
+import 'package:evently_app/firebase_service/model/categories_model.dart';
+import 'package:evently_app/firebase_service/model/event_model.dart';
 import 'package:flutter/material.dart';
 
 class EventsProvider with ChangeNotifier {
@@ -20,7 +20,7 @@ class EventsProvider with ChangeNotifier {
       eventsDisplay = eventsAll;
     } else {
       eventsDisplay = eventsAll
-          .where((event) => event.category == category)
+          .where((event) => event.categoryId == category.id)
           .toList();
     }
     notifyListeners();

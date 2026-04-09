@@ -44,7 +44,11 @@
     "reEnteryouremailaddress":"Re-enter your email address",
     "youhavesuccessfullyloggedin":"You have successfully logged in.",
     "theaccounthasbeencreatedsuccessfully":"The account has been created successfully.",
-    "logout":"Logout"
+    "logout":"Logout",
+    "sport":"Sport",
+    "birthday":"Birthday",
+    "meeting":"Meeting",
+    "all":"All"
 
 
 

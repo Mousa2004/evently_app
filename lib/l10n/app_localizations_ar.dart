@@ -146,4 +146,16 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get logout => 'تسجيل الخروج';
+
+  @override
+  String get sport => 'الرياضة';
+
+  @override
+  String get birthday => 'عيد الميلاد';
+
+  @override
+  String get meeting => 'الاجتماعات';
+
+  @override
+  String get all => 'الكل';
 }

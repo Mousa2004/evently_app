@@ -1,12 +1,13 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:evently_app/Event/edit_event_model.dart';
-import 'package:evently_app/firebase_services.dart';
+import 'package:evently_app/firebase_service/model/categories_model.dart';
+import 'package:evently_app/firebase_service/model/edit_event_model.dart';
+import 'package:evently_app/firebase_service/firebase_services.dart';
 import 'package:evently_app/home_screan.dart';
 import 'package:evently_app/l10n/app_localizations.dart';
-import 'package:evently_app/model/event_model.dart';
+import 'package:evently_app/firebase_service/model/event_model.dart';
 import 'package:evently_app/provider/events_provider.dart';
 import 'package:evently_app/provider/settingtheme_provider.dart';
-import 'package:evently_app/themeapp.dart';
+import 'package:evently_app/utils/themeapp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -24,6 +25,9 @@ class EventDetailsScrean extends StatefulWidget {
 class _EventDetailsScreanState extends State<EventDetailsScrean> {
   @override
   Widget build(BuildContext context) {
+    final category = CategoriesModel.categories(
+      context,
+    ).firstWhere((c) => c.id == widget.event.categoryId);
     AppLocalizations appLocalizations = AppLocalizations.of(context)!;
     SettingthemeProvider settingthemeProvider =
         Provider.of<SettingthemeProvider>(context);
@@ -85,7 +89,7 @@ class _EventDetailsScreanState extends State<EventDetailsScrean> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(16.r),
                 child: Image.asset(
-                  "assets/images/${widget.event.category.imageName}.png",
+                  "assets/images/${category.imageName}.png",
                   height: MediaQuery.sizeOf(context).height * 0.23.h,
                   width: MediaQuery.sizeOf(context).width,
                   fit: BoxFit.fill,
