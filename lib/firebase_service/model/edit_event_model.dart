@@ -27,32 +27,44 @@ class EditEventModel extends StatefulWidget {
 
 class _EditEventModelState extends State<EditEventModel> {
   int currentIndex = 0;
-  late CategoriesModel selectCategory;
+
+  CategoriesModel? selectCategory;
+
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   GlobalKey<FormState> formstate = GlobalKey<FormState>();
   DateTime? selectData;
   TimeOfDay? selectTime;
   DateFormat dateFormat = DateFormat('d/M/yyyy');
-
   @override
   void initState() {
+    super.initState();
+
     titleController.text = widget.event.title;
     descriptionController.text = widget.event.description;
+
     selectData = widget.event.dateTime;
     selectTime = TimeOfDay.fromDateTime(widget.event.dateTime);
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      selectCategory = CategoriesModel.categories(
-        context,
-      ).firstWhere((c) => c.id == widget.event.categoryId);
+  }
 
-      currentIndex = CategoriesModel.categories(
-        context,
-      ).indexOf(selectCategory);
+  bool _isInit = false;
 
-      setState(() {});
-    });
-    super.initState();
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    if (!_isInit) {
+      final categories = CategoriesModel.categories(context);
+
+      selectCategory = categories.firstWhere(
+        (c) => c.id == widget.event.categoryId,
+        orElse: () => categories.first,
+      );
+
+      currentIndex = categories.indexOf(selectCategory!);
+
+      _isInit = true;
+    }
   }
 
   @override
@@ -67,6 +79,9 @@ class _EditEventModelState extends State<EditEventModel> {
     AppLocalizations appLocalizations = AppLocalizations.of(context)!;
     SettingthemeProvider settingthemeProvider =
         Provider.of<SettingthemeProvider>(context);
+
+    final categories = CategoriesModel.categories(context);
+
     return Scaffold(
       appBar: AppBar(title: Text(appLocalizations.editEvent)),
       body: SingleChildScrollView(
@@ -84,7 +99,7 @@ class _EditEventModelState extends State<EditEventModel> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(16.r),
                   child: Image.asset(
-                    "assets/images/${selectCategory.imageName}.png",
+                    "assets/images/${selectCategory?.imageName ?? 'default'}.png",
                     height: MediaQuery.sizeOf(context).height * 0.23.h,
                     width: MediaQuery.sizeOf(context).width,
                     fit: BoxFit.fill,
@@ -92,47 +107,44 @@ class _EditEventModelState extends State<EditEventModel> {
                 ),
               ),
             ),
+
             Padding(
               padding: const EdgeInsets.only(left: 16),
               child: DefaultTabController(
-                length: CategoriesModel.categories(context).length,
+                length: categories.length,
                 child: TabBar(
-                  labelPadding: EdgeInsets.only(right: 10),
+                  labelPadding: const EdgeInsets.only(right: 10),
                   isScrollable: true,
-                  indicatorColor: Themeapp.transparent,
-                  dividerColor: Themeapp.transparent,
+                  indicatorColor: Colors.transparent,
+                  dividerColor: Colors.transparent,
                   tabAlignment: TabAlignment.start,
 
                   onTap: (index) {
-                    currentIndex = index;
-                    selectCategory = CategoriesModel.categories(
-                      context,
-                    )[currentIndex];
-                    setState(() {});
+                    setState(() {
+                      currentIndex = index;
+                      selectCategory = categories[index];
+                    });
                   },
 
-                  tabs: CategoriesModel.categories(context)
-                      .map(
-                        (Category) => TabbarItem(
-                          imageIcon: Category.imageIcon,
-                          text: Category.name,
-                          isSelect:
-                              currentIndex ==
-                              CategoriesModel.categories(
-                                context,
-                              ).indexOf(Category),
-                          selectColor: settingthemeProvider.isDark
-                              ? Themeapp.black
-                              : Themeapp.white,
-                          unselectColor: Themeapp.primary,
-                          colorBorder: Themeapp.primary,
-                          selectBackgroundColor: Themeapp.primary,
-                        ),
-                      )
-                      .toList(),
+                  tabs: List.generate(categories.length, (index) {
+                    final category = categories[index];
+
+                    return TabbarItem(
+                      imageIcon: category.imageIcon,
+                      text: category.name,
+                      isSelect: currentIndex == index,
+                      selectColor: settingthemeProvider.isDark
+                          ? Themeapp.black
+                          : Themeapp.white,
+                      unselectColor: Themeapp.primary,
+                      colorBorder: Themeapp.primary,
+                      selectBackgroundColor: Themeapp.primary,
+                    );
+                  }),
                 ),
               ),
             ),
+
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Form(
@@ -140,183 +152,96 @@ class _EditEventModelState extends State<EditEventModel> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(
-                      width: double.infinity,
-                      child: Text(
-                        appLocalizations.title,
-                        style: Theme.of(context).textTheme.titleMedium!
-                            .copyWith(
-                              color: settingthemeProvider.isDark
-                                  ? Themeapp.white
-                                  : null,
-                            ),
-                      ),
-                    ),
+                    Text(appLocalizations.title),
                     SizedBox(height: 8.h),
+
                     Customedtextformfieled(
                       hint: appLocalizations.eventTitle,
                       colorHint: Themeapp.grey,
                       imageName: "title_edit",
                       controller: titleController,
                     ),
+
                     SizedBox(height: 16.h),
-                    SizedBox(
-                      width: double.infinity,
-                      child: Text(
-                        appLocalizations.description,
-                        style: Theme.of(context).textTheme.titleMedium!
-                            .copyWith(
-                              color: settingthemeProvider.isDark
-                                  ? Themeapp.white
-                                  : null,
-                            ),
-                      ),
-                    ),
+
+                    Text(appLocalizations.description),
                     SizedBox(height: 8.h),
+
                     Customedtextformfieled(
                       hint: appLocalizations.eventDescription,
                       colorHint: Themeapp.grey,
                       imageName: "title_edit",
                       controller: descriptionController,
                     ),
+
                     SizedBox(height: 16.h),
+
+                    /// DATE
                     Row(
                       children: [
-                        SvgPicture.asset(
-                          "assets/icons/data.svg",
-                          height: 24.h,
-                          width: 24.w,
-                          fit: BoxFit.scaleDown,
-                          colorFilter: settingthemeProvider.isDark
-                              ? ColorFilter.mode(
-                                  Themeapp.white,
-                                  BlendMode.srcIn,
-                                )
-                              : null,
-                        ),
-                        SizedBox(width: 5.w),
-                        Text(
-                          appLocalizations.eventData,
-                          style: Theme.of(context).textTheme.titleMedium!
-                              .copyWith(
-                                color: settingthemeProvider.isDark
-                                    ? Themeapp.white
-                                    : null,
-                              ),
-                        ),
-                        Spacer(),
+                        SvgPicture.asset("assets/icons/data.svg"),
+                        const SizedBox(width: 5),
+                        Text(appLocalizations.eventData),
+                        const Spacer(),
                         InkWell(
                           onTap: () async {
                             DateTime? data = await showDatePicker(
                               context: context,
                               firstDate: DateTime.now(),
-                              lastDate: DateTime.now().add(Duration(days: 365)),
+                              lastDate: DateTime.now().add(
+                                const Duration(days: 365),
+                              ),
                             );
+
                             if (data != null) {
-                              selectData = data;
-                              setState(() {});
+                              setState(() => selectData = data);
                             }
                           },
                           child: Text(
                             selectData == null
                                 ? appLocalizations.chooseData
                                 : dateFormat.format(selectData!),
-                            style: Theme.of(context).textTheme.titleMedium!
-                                .copyWith(color: Themeapp.primary),
+                            style: const TextStyle(color: Themeapp.primary),
                           ),
                         ),
                       ],
                     ),
+
                     SizedBox(height: 16.h),
+
+                    /// TIME
                     Row(
                       children: [
-                        SvgPicture.asset(
-                          "assets/icons/time.svg",
-                          height: 24.h,
-                          width: 24.w,
-                          fit: BoxFit.scaleDown,
-                          colorFilter: settingthemeProvider.isDark
-                              ? ColorFilter.mode(
-                                  Themeapp.white,
-                                  BlendMode.srcIn,
-                                )
-                              : null,
-                        ),
-                        SizedBox(width: 5.w),
-                        Text(
-                          appLocalizations.eventTime,
-
-                          style: Theme.of(context).textTheme.titleMedium!
-                              .copyWith(
-                                color: settingthemeProvider.isDark
-                                    ? Themeapp.white
-                                    : null,
-                              ),
-                        ),
-                        Spacer(),
+                        SvgPicture.asset("assets/icons/time.svg"),
+                        const SizedBox(width: 5),
+                        Text(appLocalizations.eventTime),
+                        const Spacer(),
                         InkWell(
                           onTap: () async {
                             TimeOfDay? time = await showTimePicker(
                               context: context,
                               initialTime: TimeOfDay.now(),
                             );
+
                             if (time != null) {
-                              selectTime = time;
-                              setState(() {});
+                              setState(() => selectTime = time);
                             }
                           },
                           child: Text(
                             selectTime == null
                                 ? appLocalizations.chooseTime
                                 : selectTime!.format(context),
-                            style: Theme.of(context).textTheme.titleMedium!
-                                .copyWith(color: Themeapp.primary),
+                            style: const TextStyle(color: Themeapp.primary),
                           ),
                         ),
                       ],
                     ),
-                    SizedBox(height: 16.h),
-                    SizedBox(
-                      width: double.infinity,
-                      child: Text(
-                        appLocalizations.location,
-                        style: Theme.of(context).textTheme.titleMedium,
-                      ),
-                    ),
-                    SizedBox(height: 8.h),
-                    Container(
-                      padding: EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
-                        border: Border.all(color: Themeapp.primary),
-                      ),
-                      child: Row(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.all(12),
-                            decoration: BoxDecoration(
-                              color: Themeapp.primary,
-                              borderRadius: BorderRadius.circular(8.r),
-                            ),
-                            child: SvgPicture.asset(
-                              "assets/icons/location.svg",
-                            ),
-                          ),
-                          SizedBox(width: 8.w),
-                          Text(
-                            appLocalizations.chooseEventLocation,
-                            style: Theme.of(context).textTheme.titleMedium!
-                                .copyWith(color: Themeapp.primary),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 12.h),
+
+                    SizedBox(height: 20.h),
+
                     Customedbutton(
                       name: appLocalizations.editEvent,
-                      onPressed: () {
-                        editEvent();
-                      },
+                      onPressed: () => editEvent(),
                     ),
                   ],
                 ),
@@ -331,7 +256,8 @@ class _EditEventModelState extends State<EditEventModel> {
   void editEvent() {
     if (formstate.currentState!.validate() &&
         selectData != null &&
-        selectTime != null) {
+        selectTime != null &&
+        selectCategory != null) {
       DateTime dateTime = DateTime(
         selectData!.year,
         selectData!.month,
@@ -339,14 +265,16 @@ class _EditEventModelState extends State<EditEventModel> {
         selectTime!.hour,
         selectTime!.minute,
       );
+
       EventModel event = EventModel(
         id: widget.event.id,
         userId: FirebaseAuth.instance.currentUser!.uid,
-        categoryId: selectCategory.id,
+        categoryId: selectCategory!.id,
         title: titleController.text,
         description: descriptionController.text,
         dateTime: dateTime,
       );
+
       FirebaseServices.editEvent(event).then((_) {
         Provider.of<EventsProvider>(context, listen: false).getEvents();
         Navigator.of(context).pushReplacementNamed(HomeScrean.routName);

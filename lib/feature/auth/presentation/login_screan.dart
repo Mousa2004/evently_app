@@ -3,6 +3,7 @@ import 'package:evently_app/feature/auth/presentation/register_screan.dart';
 import 'package:evently_app/feature/auth/widget/customedTextFormFieled.dart';
 import 'package:evently_app/feature/auth/widget/customedbutton.dart';
 import 'package:evently_app/feature/auth/widget/logo_srean.dart';
+import 'package:evently_app/utils/ui_utils.dart';
 import 'package:evently_app/utils/utility.dart';
 import 'package:evently_app/firebase_service/firebase_services.dart';
 import 'package:evently_app/feature/home/home_screan.dart';
@@ -58,7 +59,7 @@ class _LoginScreanState extends State<LoginScrean> {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
           child: SingleChildScrollView(
             child: Column(
               children: [
@@ -255,26 +256,43 @@ class _LoginScreanState extends State<LoginScrean> {
     );
   }
 
-  void login(AppLocalizations appLocalizations) {
+  void login(AppLocalizations appLocalizations) async {
     if (formState.currentState!.validate()) {
-      FirebaseServices.login(email: email.text, password: password.text)
-          .then((user) {
-            Provider.of<UsersProvider>(
-              context,
-              listen: false,
-            ).updateCurrentUser(user);
-            Utility.showSuccessMessage(
-              appLocalizations.youhavesuccessfullyloggedin,
-            );
-            Navigator.of(context).pushReplacementNamed(HomeScrean.routName);
-          })
-          .catchError((error) {
-            String? errormessage;
-            if (error is FirebaseAuthException) {
-              errormessage = error.message;
-            }
-            Utility.showErrorMessage(errormessage);
-          });
+      UIUtils.showLoading(context);
+
+      try {
+        final user = await FirebaseServices.login(
+          email: email.text.trim(),
+          password: password.text.trim(),
+        );
+
+        if (!mounted) return;
+
+        Provider.of<UsersProvider>(
+          context,
+          listen: false,
+        ).updateCurrentUser(user);
+
+        UIUtils.hideLoading(context);
+
+        Utility.showSuccessMessage(
+          appLocalizations.youhavesuccessfullyloggedin,
+        );
+
+        Navigator.of(context).pushReplacementNamed(HomeScrean.routName);
+      } on FirebaseAuthException catch (error) {
+        if (!mounted) return;
+
+        UIUtils.hideLoading(context);
+
+        Utility.showErrorMessage(error.message ?? "Login failed");
+      } catch (e) {
+        if (!mounted) return;
+
+        UIUtils.hideLoading(context);
+
+        Utility.showErrorMessage(e.toString());
+      }
     }
   }
 }

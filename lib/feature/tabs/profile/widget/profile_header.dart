@@ -31,11 +31,11 @@ class ProfileHeader extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    usersProvider.currentUser!.name,
+                    usersProvider.currentUser?.name ?? "",
                     style: Theme.of(context).textTheme.headlineSmall,
                   ),
                   Text(
-                    usersProvider.currentUser!.email,
+                    usersProvider.currentUser?.email ?? "",
                     style: Theme.of(
                       context,
                     ).textTheme.titleMedium!.copyWith(color: Themeapp.white),

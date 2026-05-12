@@ -49,6 +49,7 @@ dependencies:
   flutter_screenutil: ^5.9.3
   flutter_localizations:
     sdk: flutter
+  lottie: ^3.3.3
 
 dev_dependencies:
   flutter_test:
@@ -77,6 +78,7 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+    - assets/svg/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

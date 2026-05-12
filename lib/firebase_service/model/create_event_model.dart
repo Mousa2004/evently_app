@@ -33,13 +33,16 @@ class _CreateEventModelState extends State<CreateEventModel> {
   DateTime? selectData;
   TimeOfDay? selectTime;
   DateFormat dateFormat = DateFormat('d/M/yyyy');
-  @override
-  void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      selectCategory = CategoriesModel.categories(context).first;
-    });
 
-    super.initState();
+  bool _isInit = false;
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    if (!_isInit) {
+      selectCategory = CategoriesModel.categories(context).first;
+      _isInit = true;
+    }
   }
 
   @override
@@ -91,37 +94,39 @@ class _CreateEventModelState extends State<CreateEventModel> {
                   tabAlignment: TabAlignment.start,
 
                   onTap: (index) {
-                    currentIndex = index;
-                    selectCategory = CategoriesModel.categories(
-                      context,
-                    )[currentIndex];
-                    setState(() {});
+                    setState(() {
+                      currentIndex = index;
+                      selectCategory = CategoriesModel.categories(
+                        context,
+                      )[index];
+                    });
                   },
 
-                  tabs: CategoriesModel.categories(context)
-                      .map(
-                        (Category) => TabbarItem(
-                          imageIcon: Category.imageIcon,
-                          text: Category.name,
-                          isSelect:
-                              currentIndex ==
-                              CategoriesModel.categories(
-                                context,
-                              ).indexOf(Category),
-                          selectColor: settingthemeProvider.isDark
-                              ? Themeapp.black
-                              : Themeapp.white,
-                          unselectColor: Themeapp.primary,
-                          colorBorder: Themeapp.primary,
-                          selectBackgroundColor: Themeapp.primary,
-                        ),
-                      )
-                      .toList(),
+                  tabs: List.generate(
+                    CategoriesModel.categories(context).length,
+                    (index) {
+                      final category = CategoriesModel.categories(
+                        context,
+                      )[index];
+
+                      return TabbarItem(
+                        imageIcon: category.imageIcon,
+                        text: category.name,
+                        isSelect: currentIndex == index,
+                        selectColor: settingthemeProvider.isDark
+                            ? Themeapp.black
+                            : Themeapp.white,
+                        unselectColor: Themeapp.primary,
+                        colorBorder: Themeapp.primary,
+                        selectBackgroundColor: Themeapp.primary,
+                      );
+                    },
+                  ),
                 ),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
               child: Form(
                 key: formstate,
                 child: Column(
@@ -144,6 +149,10 @@ class _CreateEventModelState extends State<CreateEventModel> {
                       hint: appLocalizations.eventTitle,
                       imageName: "title_edit",
                       controller: title,
+                      validator: (p0) {
+                        if (p0 == '') return appLocalizations.enteryouremail;
+                        return null;
+                      },
                     ),
                     SizedBox(height: 16.h),
                     SizedBox(
@@ -163,6 +172,10 @@ class _CreateEventModelState extends State<CreateEventModel> {
                       hint: appLocalizations.eventDescription,
                       imageName: "title_edit",
                       controller: description,
+                      validator: (p0) {
+                        if (p0 == '') return appLocalizations.enteryouremail;
+                        return null;
+                      },
                     ),
                     SizedBox(height: 16.h),
                     Row(

@@ -2,6 +2,7 @@ import 'package:evently_app/feature/auth/presentation/login_screan.dart';
 import 'package:evently_app/feature/auth/widget/customedTextFormFieled.dart';
 import 'package:evently_app/feature/auth/widget/customedbutton.dart';
 import 'package:evently_app/feature/auth/widget/logo_srean.dart';
+import 'package:evently_app/utils/ui_utils.dart';
 import 'package:evently_app/utils/utility.dart';
 import 'package:evently_app/firebase_service/firebase_services.dart';
 import 'package:evently_app/feature/l10n/app_localizations.dart';
@@ -145,30 +146,44 @@ class _RegisterScreanState extends State<RegisterScrean> {
     );
   }
 
-  void register(AppLocalizations appLocalizations) {
+  void register(AppLocalizations appLocalizations) async {
     if (formState.currentState!.validate()) {
-      FirebaseServices.register(
-            name: username.text,
-            email: email.text,
-            password: password.text,
-          )
-          .then((user) {
-            Provider.of<UsersProvider>(
-              context,
-              listen: false,
-            ).updateCurrentUser(user);
-            Utility.showSuccessMessage(
-              appLocalizations.theaccounthasbeencreatedsuccessfully,
-            );
-            Navigator.of(context).pushReplacementNamed(LoginScrean.routName);
-          })
-          .catchError((error) {
-            String? errorMessage;
-            if (error is FirebaseAuthException) {
-              errorMessage = error.message;
-            }
-            Utility.showErrorMessage(errorMessage);
-          });
+      UIUtils.showLoading(context);
+
+      try {
+        final user = await FirebaseServices.register(
+          name: username.text.trim(),
+          email: email.text.trim(),
+          password: password.text.trim(),
+        );
+
+        if (!mounted) return;
+
+        Provider.of<UsersProvider>(
+          context,
+          listen: false,
+        ).updateCurrentUser(user);
+
+        UIUtils.hideLoading(context);
+
+        Utility.showSuccessMessage(
+          appLocalizations.theaccounthasbeencreatedsuccessfully,
+        );
+
+        Navigator.of(context).pushReplacementNamed(LoginScrean.routName);
+      } on FirebaseAuthException catch (error) {
+        if (!mounted) return;
+
+        UIUtils.hideLoading(context);
+
+        Utility.showErrorMessage(error.message ?? "Something went wrong");
+      } catch (e) {
+        if (!mounted) return;
+
+        UIUtils.hideLoading(context);
+
+        Utility.showErrorMessage(e.toString());
+      }
     }
   }
 }

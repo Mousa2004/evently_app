@@ -71,7 +71,7 @@ class _TabbarHeaderState extends State<TabbarHeader>
                 style: Theme.of(context).textTheme.titleSmall,
               ),
               Text(
-                usersProvider.currentUser!.name,
+                usersProvider.currentUser?.name ?? "",
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
 
