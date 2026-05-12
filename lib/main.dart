@@ -1,12 +1,12 @@
 import 'package:evently_app/firebase_service/model/create_event_model.dart';
-import 'package:evently_app/auth/presentation/login_screan.dart';
-import 'package:evently_app/auth/presentation/register_screan.dart';
-import 'package:evently_app/home_screan.dart';
-import 'package:evently_app/onboarding/presentation/onboarding.dart';
-import 'package:evently_app/provider/events_provider.dart';
-import 'package:evently_app/provider/settingLocalizaion_provider.dart';
-import 'package:evently_app/provider/settingtheme_provider.dart';
-import 'package:evently_app/provider/users_provider.dart';
+import 'package:evently_app/feature/auth/presentation/login_screan.dart';
+import 'package:evently_app/feature/auth/presentation/register_screan.dart';
+import 'package:evently_app/feature/home/home_screan.dart';
+import 'package:evently_app/feature/onboarding/presentation/onboarding.dart';
+import 'package:evently_app/feature/provider/events_provider.dart';
+import 'package:evently_app/feature/provider/settingLocalizaion_provider.dart';
+import 'package:evently_app/feature/provider/settingtheme_provider.dart';
+import 'package:evently_app/feature/provider/users_provider.dart';
 import 'package:evently_app/utils/themeapp.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -14,7 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'l10n/app_localizations.dart';
+import 'feature/l10n/app_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

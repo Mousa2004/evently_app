@@ -1,0 +1,280 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:evently_app/feature/auth/presentation/register_screan.dart';
+import 'package:evently_app/feature/auth/widget/customedTextFormFieled.dart';
+import 'package:evently_app/feature/auth/widget/customedbutton.dart';
+import 'package:evently_app/feature/auth/widget/logo_srean.dart';
+import 'package:evently_app/utils/utility.dart';
+import 'package:evently_app/firebase_service/firebase_services.dart';
+import 'package:evently_app/feature/home/home_screan.dart';
+import 'package:evently_app/feature/l10n/app_localizations.dart';
+import 'package:evently_app/feature/provider/settingtheme_provider.dart';
+import 'package:evently_app/feature/provider/users_provider.dart';
+import 'package:evently_app/utils/themeapp.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:provider/provider.dart';
+
+class LoginScrean extends StatefulWidget {
+  static const String routName = "/login";
+  const LoginScrean({super.key});
+
+  @override
+  State<LoginScrean> createState() => _LoginScreanState();
+}
+
+class _LoginScreanState extends State<LoginScrean> {
+  TextEditingController email = TextEditingController();
+  TextEditingController password = TextEditingController();
+  GlobalKey<FormState> formState = GlobalKey<FormState>();
+  bool _obscureText = true;
+
+  Future signInWithGoogle() async {
+    // Trigger the authentication flow
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+    if (googleUser == null) return;
+
+    // Obtain the auth details from the request
+    final GoogleSignInAuthentication googleAuth =
+        await googleUser.authentication;
+
+    // Create a new credential
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+
+    // Once signed in, return the UserCredential
+    await FirebaseAuth.instance.signInWithCredential(credential);
+    Navigator.of(context).pushReplacementNamed(HomeScrean.routName);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    AppLocalizations appLocalizations = AppLocalizations.of(context)!;
+    SettingthemeProvider settingthemeProvider =
+        Provider.of<SettingthemeProvider>(context);
+    return Scaffold(
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                LogoSrean(),
+                SizedBox(height: MediaQuery.sizeOf(context).height * 0.04.h),
+                Form(
+                  key: formState,
+                  child: Column(
+                    children: [
+                      Customedtextformfieled(
+                        hint: appLocalizations.email,
+                        imageName: "email",
+                        controller: email,
+                        validator: (p0) {
+                          if (p0 == '') return appLocalizations.enteryouremail;
+                          return null;
+                        },
+                      ),
+                      SizedBox(
+                        height: MediaQuery.sizeOf(context).height * 0.02.h,
+                      ),
+                      Customedtextformfieled(
+                        controller: password,
+                        hint: appLocalizations.password,
+                        imageName: "password",
+                        validator: (p0) {
+                          if (p0 == '' || p0!.length < 6) {
+                            return appLocalizations.passwordmustatlest6number;
+                          }
+                          return null;
+                        },
+                        obscureText: _obscureText,
+                        suffixIcon: IconButton(
+                          onPressed: () {
+                            _obscureText = !_obscureText;
+                            setState(() {});
+                          },
+                          icon: Icon(
+                            _obscureText
+                                ? Icons.visibility_off
+                                : Icons.visibility,
+                            color: settingthemeProvider.isDark
+                                ? Themeapp.white
+                                : null,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: MediaQuery.sizeOf(context).height * 0.01.h),
+                SizedBox(
+                  width: double.infinity,
+                  child: InkWell(
+                    onTap: () async {
+                      if (email.text == "") {
+                        AwesomeDialog(
+                          context: context,
+                          dialogType: DialogType.info,
+                          animType: AnimType.rightSlide,
+                          title: appLocalizations.enteryouremail,
+                          btnCancelOnPress: () {},
+                          btnOkOnPress: () {},
+                        ).show();
+                        return;
+                      }
+                      try {
+                        await FirebaseAuth.instance.sendPasswordResetEmail(
+                          email: email.text,
+                        );
+                        AwesomeDialog(
+                          context: context,
+                          dialogType: DialogType.success,
+                          animType: AnimType.rightSlide,
+                          title: appLocalizations
+                              .pleasecheckyouremailtoresetyourpassword,
+                          btnCancelOnPress: () {},
+                          btnOkOnPress: () {},
+                        ).show();
+                      } catch (e) {
+                        print(e);
+                        AwesomeDialog(
+                          context: context,
+                          dialogType: DialogType.error,
+                          animType: AnimType.rightSlide,
+                          title: appLocalizations.reEnteryouremailaddress,
+                          btnCancelOnPress: () {},
+                          btnOkOnPress: () {},
+                        ).show();
+                      }
+                    },
+                    child: Text(
+                      textAlign: TextAlign.end,
+                      appLocalizations.forgetPassword,
+                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                        color: Themeapp.primary,
+                        decoration: TextDecoration.underline,
+                        decorationColor: Themeapp.primary,
+                        fontWeight: FontWeight.w700,
+                        decorationThickness: 2,
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: MediaQuery.sizeOf(context).height * 0.02.h),
+                Customedbutton(
+                  name: appLocalizations.login,
+                  onPressed: () {
+                    login(appLocalizations);
+                  },
+                ),
+                SizedBox(height: MediaQuery.sizeOf(context).height * 0.02.h),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      appLocalizations.dontHaveAccount,
+                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                        color: settingthemeProvider.isDark
+                            ? Themeapp.white
+                            : null,
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(
+                          context,
+                        ).pushReplacementNamed(RegisterScrean.routName);
+                      },
+                      child: Text(
+                        appLocalizations.createAccount,
+                        style: Theme.of(context).textTheme.titleMedium!
+                            .copyWith(
+                              color: Themeapp.primary,
+                              decorationColor: Themeapp.primary,
+                              decoration: TextDecoration.underline,
+                              fontStyle: FontStyle.italic,
+                              decorationThickness: 2,
+                            ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: MediaQuery.sizeOf(context).height * 0.02.h),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 45),
+                  child: Row(
+                    children: [
+                      Expanded(child: Divider(color: Themeapp.primary)),
+                      Text(
+                        appLocalizations.or,
+                        style: Theme.of(context).textTheme.titleMedium!
+                            .copyWith(color: Themeapp.primary),
+                      ),
+                      Expanded(child: Divider(color: Themeapp.primary)),
+                    ],
+                  ),
+                ),
+                SizedBox(height: MediaQuery.sizeOf(context).height * 0.02.h),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(color: Themeapp.primary),
+                  ),
+                  child: MaterialButton(
+                    padding: EdgeInsets.symmetric(vertical: 16),
+                    onPressed: () {
+                      signInWithGoogle();
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          "assets/images/google.png",
+                          height: 26.h,
+                          width: 26.w,
+                          fit: BoxFit.scaleDown,
+                        ),
+                        Text(
+                          appLocalizations.loginWithGoogle,
+                          style: Theme.of(context).textTheme.titleLarge!
+                              .copyWith(fontWeight: FontWeight.w500),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  void login(AppLocalizations appLocalizations) {
+    if (formState.currentState!.validate()) {
+      FirebaseServices.login(email: email.text, password: password.text)
+          .then((user) {
+            Provider.of<UsersProvider>(
+              context,
+              listen: false,
+            ).updateCurrentUser(user);
+            Utility.showSuccessMessage(
+              appLocalizations.youhavesuccessfullyloggedin,
+            );
+            Navigator.of(context).pushReplacementNamed(HomeScrean.routName);
+          })
+          .catchError((error) {
+            String? errormessage;
+            if (error is FirebaseAuthException) {
+              errormessage = error.message;
+            }
+            Utility.showErrorMessage(errormessage);
+          });
+    }
+  }
+}

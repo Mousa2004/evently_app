@@ -1,4 +1,4 @@
-import 'package:evently_app/l10n/app_localizations.dart';
+import 'package:evently_app/feature/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class CategoriesModel {

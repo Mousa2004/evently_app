@@ -1,0 +1,186 @@
+import 'package:evently_app/feature/auth/presentation/login_screan.dart';
+import 'package:evently_app/feature/onboarding/widget/onboarding_item.dart';
+import 'package:evently_app/feature/onboarding/widget/switch_item.dart';
+import 'package:evently_app/firebase_service/model/onboarding_model.dart';
+import 'package:evently_app/utils/themeapp.dart' show Themeapp;
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:introduction_screen/introduction_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+class Onboarding extends StatefulWidget {
+  static const String routName = "/onboarding";
+  const Onboarding({super.key});
+
+  @override
+  State<Onboarding> createState() => _OnboardingState();
+}
+
+class _OnboardingState extends State<Onboarding> {
+  bool language = false;
+  bool theme = false;
+  int currentIndex = 0;
+  final introKey = GlobalKey<IntroductionScreenState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Image.asset("assets/images/onboarding_logo.png"),
+        centerTitle: true,
+      ),
+      body: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16.w),
+          child: Column(
+            children: [
+              SizedBox(height: MediaQuery.sizeOf(context).height * 0.02.h),
+              Expanded(
+                child: SizedBox(
+                  child: IntroductionScreen(
+                    key: introKey,
+                    onChange: (value) {
+                      currentIndex = value;
+                      setState(() {});
+                    },
+                    pages: OnboardingModel.onboradingList.asMap().entries.map((
+                      entry,
+                    ) {
+                      var item = entry.value;
+                      return PageViewModel(
+                        decoration: PageDecoration(
+                          contentMargin: EdgeInsets.symmetric(horizontal: 10.w),
+                        ),
+                        image: Image.asset(
+                          "${item['image']}",
+                          height: MediaQuery.sizeOf(context).height * 0.9.h,
+                          width: MediaQuery.sizeOf(context).width * 0.9.w,
+                          fit: BoxFit.fill,
+                        ),
+                        titleWidget: SizedBox(
+                          width: double.infinity,
+                          child: Text(
+                            "${item['title']}",
+                            style: Theme.of(context).textTheme.titleLarge,
+                          ),
+                        ),
+                        bodyWidget: Column(
+                          children: [
+                            Text(
+                              "${item['body']}",
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                            SizedBox(
+                              height:
+                                  MediaQuery.sizeOf(context).height * 0.03.h,
+                            ),
+                            currentIndex != 0
+                                ? Container()
+                                : Padding(
+                                    padding: const EdgeInsets.only(bottom: 20),
+                                    child: Column(
+                                      children: [
+                                        SwitchItem(
+                                          name: "Language",
+                                          imageName1: "eng",
+                                          imageName2: "ar",
+                                        ),
+                                        SizedBox(
+                                          height:
+                                              MediaQuery.sizeOf(
+                                                context,
+                                              ).height *
+                                              0.03.h,
+                                        ),
+                                        SwitchItem(
+                                          name: "Theme",
+                                          imageName1: "sun",
+                                          imageName2: "moon",
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                          ],
+                        ),
+                      );
+                    }).toList(),
+                    showNextButton: currentIndex != 0,
+                    showBackButton: currentIndex != 0,
+
+                    next: OnboardingItem(
+                      margin: EdgeInsets.only(
+                        left: MediaQuery.sizeOf(context).width * 0.13.w,
+                      ),
+                      textDirection: TextDirection.rtl,
+                    ),
+                    done: OnboardingItem(
+                      margin: EdgeInsets.only(
+                        left: MediaQuery.sizeOf(context).width * 0.13.w,
+                      ),
+                      textDirection: TextDirection.rtl,
+                    ),
+                    onDone: () async {
+                      SharedPreferences sharedPref =
+                          await SharedPreferences.getInstance();
+                      sharedPref.setBool("onboarding", true);
+                      Navigator.of(
+                        context,
+                      ).pushReplacementNamed(LoginScrean.routName);
+                    },
+
+                    back: OnboardingItem(
+                      margin: EdgeInsets.only(
+                        right: MediaQuery.sizeOf(context).width * 0.13.w,
+                      ),
+                    ),
+                    dotsDecorator: currentIndex == 0
+                        ? DotsDecorator(
+                            size: Size(0, 0),
+                            activeSize: Size(0, 0),
+                          )
+                        : DotsDecorator(
+                            color: Themeapp.black,
+                            activeColor: Themeapp.primary,
+                            activeSize: Size(20, 10),
+                            activeShape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(36.r),
+                            ),
+                          ),
+                  ),
+                ),
+              ),
+
+              currentIndex != 0
+                  ? SizedBox()
+                  : Container(
+                      width: double.infinity,
+                      margin: EdgeInsets.only(
+                        left: 16.w,
+                        right: 16.w,
+                        bottom: 15.h,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Themeapp.primary,
+                        borderRadius: BorderRadius.circular(16.r),
+                      ),
+                      child: MaterialButton(
+                        onPressed: () {
+                          introKey.currentState!.next();
+                        },
+                        child: Text(
+                          "Let’s Start",
+                          style: Theme.of(context).textTheme.titleLarge!
+                              .copyWith(
+                                color: Themeapp.white,
+                                fontWeight: FontWeight.w500,
+                              ),
+                        ),
+                      ),
+                    ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
